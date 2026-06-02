@@ -30,7 +30,9 @@ Overview of the two databases’ function, according to the Supreme People’s C
 
 -  download full text of complaints
 
--  topic analysis on full text
+- clean & filter case text to only include tokens
+
+-  topic analysis using tokens.
 
 ------------------------------------------------------------------------
 
