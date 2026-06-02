@@ -1,12 +1,18 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/justice_scale.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Athlete · Court · Complaints — QSS20</title>
   </head>
   <body>
+    <script>
+      document.documentElement.setAttribute(
+        'data-theme',
+        window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      )
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

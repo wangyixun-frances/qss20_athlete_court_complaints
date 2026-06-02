@@ -8,9 +8,9 @@ export default function Opening() {
       <InkDecor />
       <div className="section-inner" style={{ position: 'relative', zIndex: 1 }}>
         <div ref={ref} className="fade-in">
-
-          <p className="label-tag">Research Question</p>
-
+          <br></br>
+          <br></br>
+          
           <h1 style={{
             fontFamily: 'var(--font-serif)',
             fontSize: 'clamp(2.4rem, 5.5vw, 4.2rem)',
@@ -21,10 +21,7 @@ export default function Opening() {
             marginBottom: '1.5rem',
             letterSpacing: '-0.01em',
           }}>
-            What are the main judicial concerns raised by{' '}
-            <em style={{ color: 'var(--accent)', fontStyle: 'italic' }}>
-              retired Chinese athletes?
-            </em>
+            In Court: judicial concerns of <em style={{ color: 'var(--accent)'}}> retired Chinese athletes. </em>
           </h1>
 
           <div className="accent-line" />
@@ -38,7 +35,7 @@ export default function Opening() {
           }}>
             This study analyzes court records to uncover the legal battles
             faced by Chinese athletes after leaving professional sports —
-            from unpaid wages to administrative grievances.
+            from unpaid wages to retirement subsidies.
           </p>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '3rem', flexWrap: 'wrap' }}>

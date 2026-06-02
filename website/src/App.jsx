@@ -9,7 +9,9 @@ import Footer from './components/Footer'
 import './App.css'
 
 export default function App() {
-  const [theme, setTheme] = useState('dark')
+  const [theme, setTheme] = useState(
+    () => window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  )
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)

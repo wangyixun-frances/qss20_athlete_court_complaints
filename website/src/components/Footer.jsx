@@ -15,7 +15,7 @@ export default function Footer() {
           marginBottom: '0.75rem',
         }}>
           <span style={{ color: 'var(--accent)', fontFamily: 'var(--font-serif)', fontSize: '1.1rem', fontWeight: 600 }}>
-            运动·法庭
+            中国退役运动员诉讼研究
           </span>
           <span style={{ width: 1, height: 16, background: 'var(--border)' }} />
           <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>

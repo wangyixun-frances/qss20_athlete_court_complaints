@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import * as d3 from 'd3'
 import { genderData, gapPct } from '../data/genderData'
 import SectionHeader from './SectionHeader'
@@ -7,17 +7,25 @@ import { useFadeIn } from '../hooks/useFadeIn'
 const MALE_COLOR = '#6B7DB3'
 const FEMALE_COLOR = '#C8607A'
 
+const COLORS = {
+  Male: MALE_COLOR,
+  Female: FEMALE_COLOR,
+}
+
 export default function Finding3() {
   const ref = useFadeIn()
   const svgRef = useRef(null)
+  const [hovered, setHovered] = useState(null)
+  const [tooltip, setTooltip] = useState({ x: 0, y: 0, visible: false, data: null })
 
   useEffect(() => {
     const el = svgRef.current
     if (!el) return
 
-    const W = Math.min(el.clientWidth || 500, 500)
-    const H = 320
-    const margin = { top: 30, right: 30, bottom: 40, left: 30 }
+    const size = Math.min(el.clientWidth || 420, 420)
+    const W = size, H = size
+    const r = size * 0.38
+    const innerR = size * 0.22
 
     d3.select(el).selectAll('*').remove()
 
@@ -26,98 +34,64 @@ export default function Finding3() {
       .attr('width', '100%')
       .attr('height', '100%')
 
-    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`)
-    const innerW = W - margin.left - margin.right
-    const innerH = H - margin.top - margin.bottom
+    const g = svg.append('g').attr('transform', `translate(${W / 2},${H / 2})`)
 
-    // Two large arcs — one per gender, centered in left/right halves
-    const total = genderData.reduce((s, d) => s + d.count, 0)
-    const maxR = Math.min(innerH * 0.85, innerW * 0.4) / 2
+    const pie = d3.pie().value(d => d.count).sort(null).padAngle(0.03)
+    const arc = d3.arc().innerRadius(innerR).outerRadius(r).cornerRadius(3)
+    const arcHover = d3.arc().innerRadius(innerR).outerRadius(r + 14).cornerRadius(3)
 
-    const genders = [
-      { ...genderData[0], x: innerW * 0.27, color: MALE_COLOR },    // Male left
-      { ...genderData[1], x: innerW * 0.73, color: FEMALE_COLOR },  // Female right
-    ]
+    const arcs = pie(genderData)
 
-    const centerY = innerH * 0.52
+    const paths = g.selectAll('path')
+      .data(arcs)
+      .join('path')
+      .attr('d', arc)
+      .attr('fill', d => COLORS[d.data.gender])
+      .attr('opacity', 0.88)
+      .style('cursor', 'pointer')
 
-    genders.forEach(gd => {
-      const r = maxR * Math.sqrt(gd.count / total) * 1.95
-      const circleG = g.append('g').attr('transform', `translate(${gd.x},${centerY})`)
+    paths
+      .on('mouseenter', function (event, d) {
+        d3.select(this).transition().duration(180).attr('d', arcHover).attr('opacity', 1)
+        setHovered(d.data.gender)
+        const rect = el.getBoundingClientRect()
+        setTooltip({ visible: true, data: d.data, x: event.clientX - rect.left, y: event.clientY - rect.top })
+        paths.filter(dd => dd.data.gender !== d.data.gender).attr('opacity', 0.28)
+      })
+      .on('mousemove', function (event) {
+        const rect = el.getBoundingClientRect()
+        setTooltip(t => ({ ...t, x: event.clientX - rect.left, y: event.clientY - rect.top }))
+      })
+      .on('mouseleave', function () {
+        d3.select(this).transition().duration(180).attr('d', arc).attr('opacity', 0.88)
+        setHovered(null)
+        setTooltip(t => ({ ...t, visible: false }))
+        paths.attr('opacity', 0.88)
+      })
 
-      // Background ring
-      circleG.append('circle')
-        .attr('r', maxR)
-        .attr('fill', 'none')
-        .attr('stroke', `${gd.color}18`)
-        .attr('stroke-width', 2)
+    // Animate in
+    paths.attr('opacity', 0)
+      .transition().duration(900).delay((d, i) => i * 150)
+      .attr('opacity', 0.88)
 
-      // Filled arc arc (draws in)
-      const arcPath = d3.arc()
-        .innerRadius(maxR * 0.52)
-        .outerRadius(maxR)
-        .startAngle(-Math.PI / 2)
-        .cornerRadius(4)
+    // Center label — updates on hover via separate React state, so just show total here
+    const centerG = g.append('g')
 
-      const endAngle = -Math.PI / 2 + (gd.pct / 100) * Math.PI * 2
+    centerG.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('dy', '-0.3em')
+      .attr('font-family', 'var(--font-serif)')
+      .attr('font-size', size * 0.07)
+      .attr('fill', 'var(--text-primary)')
+      .text('68')
 
-      circleG.append('path')
-        .datum({ endAngle })
-        .attr('d', arcPath.endAngle(-Math.PI / 2))
-        .attr('fill', gd.color)
-        .attr('opacity', 0.88)
-        .transition()
-        .duration(1100)
-        .delay(gd.gender === 'Male' ? 100 : 300)
-        .ease(d3.easeCubicOut)
-        .attrTween('d', function (dd) {
-          const interp = d3.interpolate(-Math.PI / 2, dd.endAngle)
-          return t => arcPath.endAngle(interp(t))()
-        })
-
-      // Inner dot
-      circleG.append('circle')
-        .attr('r', maxR * 0.12)
-        .attr('fill', gd.color)
-        .attr('opacity', 0.4)
-
-      // Percentage text
-      circleG.append('text')
-        .attr('text-anchor', 'middle')
-        .attr('dy', '-0.15em')
-        .attr('font-family', 'var(--font-serif)')
-        .attr('font-size', maxR * 0.42)
-        .attr('fill', gd.color)
-        .attr('font-weight', '300')
-        .text(`${gd.pct}%`)
-
-      circleG.append('text')
-        .attr('text-anchor', 'middle')
-        .attr('dy', '1.4em')
-        .attr('font-size', maxR * 0.185)
-        .attr('fill', 'var(--text-muted)')
-        .attr('letter-spacing', '0.08em')
-        .text(gd.gender.toUpperCase())
-
-      // Count badge
-      circleG.append('text')
-        .attr('text-anchor', 'middle')
-        .attr('y', maxR + 22)
-        .attr('font-size', maxR * 0.21)
-        .attr('fill', 'var(--text-secondary)')
-        .text(`n = ${gd.count}`)
-    })
-
-    // Center gap annotation
-    const midX = innerW * 0.5
-    svg.append('line')
-      .attr('x1', margin.left + midX)
-      .attr('y1', margin.top + centerY - maxR * 0.3)
-      .attr('x2', margin.left + midX)
-      .attr('y2', margin.top + centerY + maxR * 0.3)
-      .attr('stroke', 'var(--border)')
-      .attr('stroke-dasharray', '4,4')
-      .attr('stroke-width', 1)
+    centerG.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('dy', '1.2em')
+      .attr('font-size', size * 0.033)
+      .attr('fill', 'var(--text-muted)')
+      .attr('letter-spacing', '0.08em')
+      .text('LITIGANTS')
 
   }, [])
 
@@ -133,9 +107,32 @@ export default function Finding3() {
           />
 
           <div style={{ display: 'flex', gap: '4rem', alignItems: 'center', flexWrap: 'wrap' }}>
-            {/* Chart */}
-            <div style={{ flex: '0 0 auto', width: 'min(480px, 100%)' }}>
-              <svg ref={svgRef} style={{ width: '100%', height: 'auto', aspectRatio: '500/320', overflow: 'visible' }} />
+
+            {/* Pie chart */}
+            <div style={{ position: 'relative', flexShrink: 0, width: 'min(420px, 100%)' }}>
+              <svg ref={svgRef} style={{ width: '100%', height: 'auto', aspectRatio: '1' }} />
+              {tooltip.visible && tooltip.data && (
+                <div style={{
+                  position: 'absolute',
+                  top: tooltip.y + 12,
+                  left: tooltip.x + 12,
+                  background: 'var(--surface)',
+                  border: '1px solid var(--border)',
+                  borderRadius: 8,
+                  padding: '0.6rem 1rem',
+                  fontSize: '0.85rem',
+                  pointerEvents: 'none',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
+                  zIndex: 10,
+                  minWidth: 130,
+                }}>
+                  <div style={{ fontWeight: 600, color: COLORS[tooltip.data.gender], marginBottom: 2 }}>
+                    {tooltip.data.gender}
+                  </div>
+                  <div style={{ color: 'var(--text-primary)' }}>{tooltip.data.count} litigants</div>
+                  <div style={{ color: 'var(--text-muted)', fontSize: '0.78rem' }}>{tooltip.data.pct}% of total</div>
+                </div>
+              )}
             </div>
 
             {/* Insight panel */}
@@ -165,26 +162,33 @@ export default function Finding3() {
                 </div>
               </div>
 
-              {/* Gender bars */}
+              {/* Legend with bars */}
               {[
                 { gender: 'Male', count: 46, pct: 67.6, color: MALE_COLOR },
                 { gender: 'Female', count: 22, pct: 32.4, color: FEMALE_COLOR },
               ].map(d => (
-                <div key={d.gender} style={{ marginBottom: '1.25rem' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
-                    <span style={{ fontSize: '0.88rem', fontWeight: 500, color: 'var(--text-primary)' }}>
-                      {d.gender}
-                    </span>
-                    <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-                      {d.count} cases · {d.pct}%
-                    </span>
+                <div key={d.gender} style={{
+                  marginBottom: '1.25rem',
+                  opacity: hovered && hovered !== d.gender ? 0.35 : 1,
+                  transition: 'opacity 0.2s',
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.4rem' }}>
+                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: d.color, flexShrink: 0 }} />
+                    <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ fontSize: '0.88rem', fontWeight: 500, color: 'var(--text-primary)' }}>
+                        {d.gender}
+                      </span>
+                      <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                        {d.count} · {d.pct}%
+                      </span>
+                    </div>
                   </div>
-                  <div style={{ height: 6, background: 'var(--border)', borderRadius: 3, overflow: 'hidden' }}>
+                  <div style={{ height: 4, background: 'var(--border)', borderRadius: 2, overflow: 'hidden' }}>
                     <div style={{
                       height: '100%',
                       width: `${d.pct}%`,
                       background: d.color,
-                      borderRadius: 3,
+                      borderRadius: 2,
                       transition: 'width 1s ease',
                     }} />
                   </div>

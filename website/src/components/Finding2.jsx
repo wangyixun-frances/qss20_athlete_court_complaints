@@ -49,7 +49,7 @@ export default function Finding2() {
               title="LDA Topic Model Visualization"
               style={{
                 width: '100%',
-                height: '640px',
+                height: '620px', // 720
                 border: 'none',
                 display: 'block',
                 background: '#fff',

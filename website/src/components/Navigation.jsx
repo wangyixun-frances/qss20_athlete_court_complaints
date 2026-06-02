@@ -36,7 +36,7 @@ export default function Navigation({ theme, setTheme }) {
       <div style={innerStyle}>
         <span style={brandStyle}>
           <span style={{ color: 'var(--accent)', fontFamily: 'var(--font-serif)', fontWeight: 600 }}>
-            运动·法庭
+            中国退役运动员诉讼研究
           </span>
         </span>
 
