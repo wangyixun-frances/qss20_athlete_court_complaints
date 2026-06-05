@@ -30,10 +30,80 @@ Overview of the two databases’ function, according to the Supreme People’s C
 
 -  download full text of complaints
 
-- clean & filter case text to only include tokens
+- filter to keep cases where athletes are litigants
+
+- clean full case text and tokenize
 
 -  topic analysis using tokens.
 
 ------------------------------------------------------------------------
 
--   [ ] change pie chart visualization to be based on cleaned cases (instead of raw)
+
+- 如果是针对体校、劳动（整个体系的），驳回上诉的比例？
+- 网站：finding2改成可以选中文还是英文
+
+
+type of complaint. 
+
+
+SIDEQUEST> discrepancy - gender agency
+- 起诉人。
+
+
+
+todo:
+Paper + repo + website due: Sunday 06-07, 11:59 PM EST.
+
+Final deliverables are worth 45% of your grade and consist of four pieces:
+
+1. Paper (6 pages)
+
+Graded with the project rubric — same elements as before (intro/related work, data, methods, results writing, results figures/tables, discussion, code/repo), plus a new element:
+
+Agentic Analysis — A short section (or appendix) that includes your AI transcripts and a critical reflection on your coding session: what you asked the assistant, what you accepted, what you rejected, and where the assistant went wrong.
+
+KEY: USAGE FOR  analysis and for website generation
+
+Format. Write the paper in LaTeX using a PNAS-style single-column template:
+For reference, see the PNAS author guidelines.
+
+The page limit is 6 pages (excluding references and the Agentic Analysis section).
+
+2. GitHub repo (public)
+Numbered notebooks that run in order (00_pull.ipynb, 01_merge.ipynb, 02_analyze.ipynb, …).
+
+README links each notebook with its inputs, what it does, and its outputs.
+
+Directories: code/, data/ (or a cloud-storage link), output/.
+
+No spaces in filenames; no hardcoded paths.
+
+Define functions at the top of each notebook.
+
+Print diagnostics before/after merges.
+
+3. Website (public demo)
+A public-facing site that demos the entire project. It should tell the story end-to-end: question → data → method → result → takeaway. Embed your key figures so a visitor can grasp the project in 2–3 minutes.
+
+Must be live and linkable by the Sunday 06-07 deadline.
+
+Pushes after the deadline receive a 0 for the website component.
+
+Suggested stack: React + Vercel — a tutorial walking through this setup will be released; you are free to use a different stack if you prefer (e.g., GitHub Pages with Jupyter Book or Quarto, Streamlit, static HTML).
+
+intro/related work
+
+data
+
+
+methods
+
+results writing
+
+
+results figures/tables 
+
+discussion
+
+
+code/repo
