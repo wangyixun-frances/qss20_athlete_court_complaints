@@ -42,12 +42,37 @@ Overview of the two databases’ function, according to the Supreme People’s C
 - 如果是针对体校、劳动（整个体系的），驳回上诉的比例？
 - 网站：finding2改成可以选中文还是英文
 
+- filter to all ligitants
+- topic modeling. -> types of complaints? 
 
-type of complaint. 
 
 
-SIDEQUEST> discrepancy - gender agency
-- 起诉人。
+update stopwords
+visualizations
+- topics summary (micro)
+- pie chart of categories of the topics (macro)
+- top 10 keywords across all topics - density plot
+
+
+
+
+最后再干：
+- translate LDA graph
+- summary table: CHN and EN.
+- CUSTOMIZE pie chart (colors, label, add %)
+'
+
+
+
+
+WORKFLOW
+- ai analysis (see transcript)
+- updated stopwords using selected modifications, updated analysis
+    - 民事判决, 民事裁定, 民事, 出生, 汉族, 送达, 公告送达, 案件, 申请, 规定, 京民
+    - added 出生, 送达, 公告送达, 案件, 申请, 规定, 京民
+    - 民事判决, 民事裁定, 民事 -> important legal category
+    - 汉族 -> shows demographic information
+- 
 
 
 
@@ -91,19 +116,44 @@ Pushes after the deadline receive a 0 for the website component.
 
 Suggested stack: React + Vercel — a tutorial walking through this setup will be released; you are free to use a different stack if you prefer (e.g., GitHub Pages with Jupyter Book or Quarto, Streamlit, static HTML).
 
-intro/related work
 
-data
+
+----
+
+-----intro/related work-----
+
+Looking at the sport world, China is no doubt a formidable force on the world stage: in the most recent 2024 Paris Olympics, China ??? medals, and have dominated sports like diving and weightlifting, sports that require years of training and expertise. The secret behind this success is China's "Whole-Nation" athlete development system, where athletes are identified as young as five years old, and grow up in specialized sports schools with less academic requirements than normal 义务教育, and train full-time, fully sponsored by the State. This full financial subsidy is a defining characteristic for China's system among the world's. Looking at the other nations ranking Top3 in the Olympics, the US relies on highly commercialized sports leagues such as the NCAA to produce athletes with no governental spending (CITE), and ???? (the other country). For many athletes and their families, having their education and lodging payed for is also one of the largest motivating factors when deciding to trains as an athlete. 
+
+The other side of this coin is that sponsorship ends at the athlete's retirement, and that retirement subsidy is completely dependent on the athlete's performance during their career (CITE LAW). As a result, the majority of ahtletes withouth international-level performance end up in low paying jobs as a result of their lack of education, if not in desolate poverty (CITE MEDIA ). This is an understudied phenonemon, as athletes are often viewed as symbols and tools of achieving national pride, then forgotten without their functionality (Source: Xu, Guoqi. Olympic Dreams: China and Sports, 1895–2008. Harvard University Press, 2008.).  
+
+This project aims to restore importance in the athlete as an individual, and explore the struggles they face post-retirement under the JuGuotixi system. Using China Judgements Online, the largest publicly available databease published by the Supreme People's Court of China,  I explore the main areas of complaint raised by retired athletes. The fingdings provide important data groundwork to analysize the current landscape of athlete welfare in China, and possible causes for its insufficiency.
+
+
+
+------data-------
+China Judgements Online (CJO, chn name, link) is one of the two officially maintainted databases in China where "legally effective ajudication documents [are made] public according to law" (Donald Clarke. Follow-up on the Fate of China Judgments Online. url: https:// thechinacollection.org/follow-fate-china-judgments-online/.). The Supreme People's Court work report describes the database as an effort to promote judicial through judical openess and transparency. Despite recent taken-down////下架 of ????? cases, CJO still boasts ??? cases and is the largest database for a judicial perspective into Chinese society. The CJO includes cases from all four levels of Chinese court, from the national Supreme People's Court to local High Level People's Courts. All cases studied in this project are pulled from this database, available after a open-to-all user registration using a China mainland phone number .
 
 
 methods
+Topic modeling on pre-processed case text was determined to be the overall workflow after manually examining sample court cases from CJO. All CJO cases were in plain text format, contained no graphics, and 
+
+Data was first obtained from CJO using the ??? package in Python to perform web scraping for all cases that contained the keyword "退役运动员" using the CJO website's 原生 search function. a 
+
+(flow chart? pull - filter - clean - topic modeling & additional analysis.)
+
 
 results writing
 
 
 results figures/tables 
 
+
 discussion
 
 
-code/repo
+Note: 
+The full code and data of this project can be found at the following GitHub repository: link. Addtionally, a general-audience demo website is available here(link). 
+
+
+Appendix: agentic review
+
