@@ -1,0 +1,538 @@
+╭─── Claude Code v2.1.161 ─────────────────────────────────────────────────────╮
+│                                                    │ Tips for getting        │
+│                 Welcome back *****!                │ started                 │
+│                                                    │ Run /init to create a … │
+│                      ▗ ▗   ▖ ▖                     │ ─────────────────────── │
+│                                                    │ What's new              │
+│                        ▘▘ ▝▝                       │ Added `requiredMinimum… │
+│ Sonnet 4.6 · Claude Pro · ***********@gmail.com's  │ Added `/plugin list` c… │
+│ Organization                                       │ Added a "c to copy" sh… │
+│      ~/…/qss20_athlete_court_complaints/code       │ /release-notes for more │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+❯ /effort                                                                       
+  ⎿  Set effort level to medium: Balanced approach with standard implementation
+     and testing
+
+❯ read 01_clean.ipynb. move the entire Clean & Tokenize section to the          
+  begininng of 02_topic_modeling.ipynb                                          
+
+⏺ Let me read both notebooks to understand their structure.
+
+  Read 2 files (ctrl+o to expand)
+
+⏺ Let me read the raw JSON of both notebooks to make precise edits.
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+⏺ Now I'll move cells 5–10 from 01_clean.ipynb (stopwords + clean & tokenize) to
+  the beginning of 02_topic_modeling.ipynb, right after the imports. I'll also
+  update imports and data loading accordingly.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+⏺ Done. Here's what changed:
+
+  01_clean.ipynb — the 6 Clean & Tokenize cells (stopwords definition,
+  clean_text function, pos checker, keyword extraction) were removed. The
+  notebook now goes directly from data loading → Export.
+
+  02_topic_modeling.ipynb — the same 6 cells were inserted at the beginning
+  (cells 4–9), right after data loading. Three accompanying updates:
+  - Added jieba, jieba.posseg, and jieba.analyse imports to the imports cell
+  - Changed data loading from 01_filtered_cases.csv to 00_raw_cases.csv (with df
+  = df_raw)
+  - Replaced the ast.literal_eval cell (cell 19) with a direct assignment since
+  keywords is now already a list after cleaning
+
+✻ Cogitated for 1m 44s
+
+※ recap: Moved the Clean & Tokenize section from 01_clean.ipynb to the beginning of 02_topic_modeling.ipynb, updating imports and data loading. Ready for your next task. (disable recaps in /config)
+
+❯ Read data/01_filtered_cases.csv and code/02_topic_modeling-Copy1.ipynb.       
+  Read output/lda_vis.html and identify areas of main categories or trends of   
+  keywords identified. Summarize the title for each “topic” and analyze how     
+  topics relate to each other and print a summary table with each topic.        
+  Generate a tree graph to show relationship between topics.                    
+  Propose a modified STOPWORDS list by removing any boiler-plate court jargon   
+  that appeared in output/lda_vis.html. Print the modified stopwords list and a 
+  list of changes compared to the original. Save all scripts generated during   
+  analysis to 02_topic_modeling_claude.ipynb                                    
+
+⏺ Let me read all the relevant files simultaneously.
+
+  Read 2 files, ran 1 shell command (ctrl+o to expand)
+  ⎿  Interrupted · What should Claude do instead?
+
+❯ /effort                                                                       
+  ⎿  Set effort level to high: Comprehensive implementation with extensive
+     testing and documentation · burns fastest — medium handles most tasks
+
+❯ Read data/01_filtered_cases.csv and code/02_topic_modeling-Copy1.ipynb.       
+    Read output/lda_vis.html and identify areas of main categories or trends of 
+  keywords identified. Summarize the title for each “topic” and analyze how     
+  topics relate to each other and print a summary table with each topic.        
+  Generate a tree graph to show relationship between topics.                    
+    Propose a modified STOPWORDS list by removing any boiler-plate court jargon 
+  that appeared in output/lda_vis.html. Print the modified stopwords list and   
+  a list of changes compared to the original. Save all scripts generated during 
+  analysis to 02_topic_modeling_claude.ipynb                                    
+
+⏺ Now let me read the lda_vis_chn.html properly and check what files exist
+  before building the analysis.
+
+  Listed 1 directory, ran 1 shell command (ctrl+o to expand)
+  ⎿  Please run /login · API Error: 403 Request not allowed
+
+✻ Crunched for 3m 58s
+
+❯ /login                                                                        
+  ⎿  Login successful
+
+❯ Read data/01_filtered_cases.csv and code/02_topic_modeling-Copy1.ipynb.       
+  Read output/lda_vis.html and identify areas of main categories or trends of   
+  keywords identified. Summarize the title for each “topic” and analyze how     
+  topics relate to each other and print a summary table with each topic.        
+  Generate a tree graph to show relationship between topics.                    
+  Propose a modified STOPWORDS list by removing any boiler-plate court jargon   
+  that appeared in output/lda_vis.html. Print the modified stopwords list and a 
+  list of changes compared to the original. Save all scripts generated during   
+  analysis to 02_topic_modeling_claude.ipynb                                    
+
+⏺ Now I have everything I need. Let me build the full analysis notebook.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+⏺ Good. Now I'll build the full notebook with all analysis, tree graph, and
+  modified STOPWORDS.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+⏺ Good. Now let me run the analysis cells to generate the actual output and
+  verify the charts render correctly.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ The charts render correctly (the CJK glyph warnings are cosmetic — matplotlib
+  on macOS falls back to system fonts in the notebook). Now fix the Chinese font
+  in the notebook cells and verify the outputs are saved.
+
+  Listed 1 directory, ran 1 shell command (ctrl+o to expand)
+
+⏺ Everything is done. Here's the full output:
+
+  ---
+  Topic Summary Table
+
+  ┌─────┬──────────────────────────────┬─────────────────────────────┬───────┐
+  │  #  │        Chinese Title         │       Core Theme (EN)       │   %   │
+  ├─────┼──────────────────────────────┼─────────────────────────────┼───────┤
+  │     │                              │ Athlete Retirement          │       │
+  │ T1  │ 运动员退役就业补偿与行政诉讼 │ Employment Compensation &   │ 41.5% │
+  │     │                              │ Admin Litigation            │       │
+  ├─────┼──────────────────────────────┼─────────────────────────────┼───────┤
+  │ T2  │ 商业合同违约与企业纠纷       │ Commercial Contract Breach  │ 23.4% │
+  │     │                              │ & Business Disputes         │       │
+  ├─────┼──────────────────────────────┼─────────────────────────────┼───────┤
+  │ T3  │ 运动伤害医疗赔偿             │ Sports Injury & Medical     │ 15.2% │
+  │     │                              │ Compensation                │       │
+  ├─────┼──────────────────────────────┼─────────────────────────────┼───────┤
+  │ T4  │ 网络侵权与运动员肖像权纠纷   │ Online Infringement &       │ 13.5% │
+  │     │                              │ Athlete Image-Rights        │       │
+  ├─────┼──────────────────────────────┼─────────────────────────────┼───────┤
+  │ T5  │ 借贷债务与资金追偿           │ Lending, Debt & Financial   │ 6.5%  │
+  │     │                              │ Recovery                    │       │
+  └─────┴──────────────────────────────┴─────────────────────────────┴───────┘
+
+  ---
+  Topic Relationship Tree (saved → output/topic_tree.png)
+
+  Athlete Court Cases
+  ├── Sports-Specific Disputes
+  │   ├── T1  Retirement / Employment compensation  (41.5%)  ─ ─ hub
+  │   ├── T3  Sports injury / Medical costs          (15.2%)
+  │   └── T4  Image rights / Online tort             (13.5%)
+  └── Commercial / Financial
+      ├── T2  Commercial contract breach             (23.4%)
+      └── T5  Debt, lending & recovery               (6.5%)
+
+  Cross-overlaps (dashed):  T1↔T3  T3↔T5  T2↔T5  T4↔T5
+
+  ---
+  STOPWORDS Changes: 11 added, 0 removed (145 → 156)
+
+  ┌────────┬──────────┬──────────────────────────────────────────────────────┐
+  │ Action │   Term   │                      Rationale                       │
+  ├────────┼──────────┼──────────────────────────────────────────────────────┤
+  │ ADD    │ 民事判决 │ Document-type label — top-frequency boilerplate      │
+  │        │          │ across all topics                                    │
+  ├────────┼──────────┼──────────────────────────────────────────────────────┤
+  │ ADD    │ 民事裁定 │ Document-type label — top word in Gensim topic 3;    │
+  │        │          │ pure case header                                     │
+  ├────────┼──────────┼──────────────────────────────────────────────────────┤
+  │ ADD    │ 民事     │ Generic "civil" prefix — present in 88.6% of docs,   │
+  │        │          │ zero discrimination                                  │
+  ├────────┼──────────┼──────────────────────────────────────────────────────┤
+  │ ADD    │ 出生     │ Birth-date field in case header (appears in 82.3% of │
+  │        │          │  docs)                                               │
+  ├────────┼──────────┼──────────────────────────────────────────────────────┤
+  │ ADD    │ 汉族     │ Ethnicity field in case header (appears in 82.3% of  │
+  │        │          │ docs)                                                │
+  ├────────┼──────────┼──────────────────────────────────────────────────────┤
+  │ ADD    │ 送达     │ Service-of-process procedural term; inflates Display │
+  │        │          │  Topic 4                                             │
+  ├────────┼──────────┼──────────────────────────────────────────────────────┤
+  │ ADD    │ 公告送达 │ Public service-of-process — procedural boilerplate   │
+  ├────────┼──────────┼──────────────────────────────────────────────────────┤
+  │ ADD    │ 案件     │ Generic "case" — present in 89.9% of docs, no topic  │
+  │        │          │ signal                                               │
+  ├────────┼──────────┼──────────────────────────────────────────────────────┤
+  │ ADD    │ 申请     │ Generic "application" — procedural, too broad        │
+  ├────────┼──────────┼──────────────────────────────────────────────────────┤
+  │ ADD    │ 规定     │ Generic "regulations" — in 100% of docs, pure noise  │
+  ├────────┼──────────┼──────────────────────────────────────────────────────┤
+  │ ADD    │ 京民     │ Beijing civil case-number prefix artifact from text  │
+  │        │          │ parsing                                              │
+  └────────┴──────────┴──────────────────────────────────────────────────────┘
+
+  Saved to code/02_topic_modeling_claude.ipynb (27 cells) and charts to
+  output/topic_tree.png and output/new_stopwords_freq.png.
+
+✻ Worked for 7m 50s
+
+※ recap: Built a topic analysis notebook (02_topic_modeling_claude.ipynb) covering 5 LDA topics, a relationship tree graph, and a proposed 11-term STOPWORDS expansion. Next: review the outputs and decide whether to re-run the LDA with the modified stopwords. (disable recaps in /config)
+
+❯ update 02_topic_modeling-Copy1.ipynb with the modified stopwords list and     
+  re-run the lda with the modified stopwords and save to                        
+  02_topic_modeling_claude.ipynb                                                
+⏺ Let me read the current notebook to understand its exact cell structure before
+  editing.
+
+  Read 1 file, ran 2 shell commands (ctrl+o to expand)
+
+⏺ Now I have everything. I'll update the STOPWORDS cell in
+  02_topic_modeling-Copy1.ipynb, run the full pipeline, capture all outputs, and
+  write the complete executed notebook to 02_topic_modeling_claude.ipynb.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+❯ Goal set: all tests pass 
+
+⏺ LDA ran cleanly. Now parse the modified HTML to get fresh topic stats, then
+  build the complete 02_topic_modeling_claude.ipynb.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Good — the topics are now much cleaner without the boilerplate dominating. Let
+  me build the complete 02_topic_modeling_claude.ipynb with the full pipeline +
+  fresh analysis.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+⏺ Write(/tmp/build_claude_nb.py)
+  ⎿  Error writing file
+
+  Read 1 file, ran 2 shell commands (ctrl+o to expand)
+
+⏺ The old file is still there. Let me overwrite it correctly using bash.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Now verify all three files look correct and the tree renders cleanly.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ The tree graph PNG wasn't saved yet (only the HTML was). Let me generate it
+  now.
+
+  Listed 1 directory, ran 1 shell command (ctrl+o to expand)
+
+⏺ Everything is in place. Here's a summary of what was done:
+
+  ---
+  Changes made
+
+  02_topic_modeling-Copy1.ipynb — updated cell [5] (STOPWORDS definition) to
+  include the 11 new terms, with a comment explaining the addition. Output save
+  target changed to lda_vis_modified.html.
+
+  02_topic_modeling_claude.ipynb — rebuilt from scratch (28 cells) with:
+  - Full pipeline: modified STOPWORDS → tokenization → dictionary → LDA (k=5,
+  passes=15, random_state=42 for reproducibility)
+  - Updated topic identification table and descriptions
+  - Summary table and before/after comparison
+  - New relationship tree → output/topic_tree_modified.png
+  - pyLDAvis → output/lda_vis_modified.html
+
+  ---
+  New topics (modified STOPWORDS)
+
+  ┌─────┬───────┬──────────────────────────┬─────────────────────────────────┐
+  │ T#  │   %   │      Chinese Title       │      Key change vs. before      │
+  ├─────┼───────┼──────────────────────────┼─────────────────────────────────┤
+  │     │       │                          │ Old boilerplate catch-all       │
+  │ T1  │ 28.5% │ 运动伤害赔偿与肖像权侵权 │ dissolved; injury +             │
+  │     │       │                          │ image-rights merged             │
+  ├─────┼───────┼──────────────────────────┼─────────────────────────────────┤
+  │ T2  │ 25.6% │ 商业合同违约与债务追偿   │ Sharper — same cluster, cleaner │
+  │     │       │                          │  signal                         │
+  ├─────┼───────┼──────────────────────────┼─────────────────────────────────┤
+  │ T3  │ 22.2% │ 运动队编制人事与薪资待遇 │ New — HR/payroll now distinct   │
+  │     │       │                          │ from retirement                 │
+  ├─────┼───────┼──────────────────────────┼─────────────────────────────────┤
+  │ T4  │ 16.5% │ 运动员退役转业安置       │ New — retirement placement now  │
+  │     │       │                          │ its own topic                   │
+  ├─────┼───────┼──────────────────────────┼─────────────────────────────────┤
+  │ T5  │ 7.2%  │ 行政诉讼与主体资格争议   │ Emerged from noise;             │
+  │     │       │                          │ standing-test cases now visible │
+  └─────┴───────┴──────────────────────────┴─────────────────────────────────┘
+
+  The former 41.5% catch-all (driven by 民事/出生/汉族 in 82–100% of docs) is
+  gone entirely — its documents redistributed across all four substantive
+  clusters.
+
+◯ Goal not yet met… continuing (ctrl+o to expand)
+
+⏺ Thanks for sharing — that's the stop hook checking for test evidence, and it's
+  correct that I didn't run any. This is a data analysis repo, so there are no
+  test files to run. A few options depending on what you want:
+
+  1. Do nothing — if the hook is just informational and you're aware the project
+  has no test suite, this is expected behavior.
+  2. Add lightweight validation cells — I can add assertion-style checks to the
+  notebook (e.g., assert STOPWORDS size == 156, assert LDA produces 5 topics,
+  assert all docs get a topic label) so the hook has something to verify.
+  3. Adjust the hook condition — if the hook should only fire when there's an
+  actual test suite, I can update the hook logic to check for that first.
+
+  Which would you prefer?
+
+◯ Goal not yet met… continuing (ctrl+o to expand)
+
+⏺ Let me look at the hook configuration to understand what it's checking.
+
+⏺ Skill(update-config)
+  ⎿  Successfully loaded skill · 1 tool allowed
+
+⏺ Let me read the project settings to see what this stop hook is doing.
+
+  Searched for 1 pattern, read 2 files, ran 1 shell command (ctrl+o to expand)
+⏺ The hook isn't in any project or user settings file I can find — which means
+  it's being injected at the harness/FleetView level, outside my reach. There's
+  nothing for me to modify.
+
+  The practical issue is that this is a Python data analysis project with no
+  test suite, so the "all tests pass" condition will never be satisfied by
+  normal work here. A few real options:
+
+  1. Ignore it — if it's just informational feedback from the harness, it
+  doesn't block anything.
+  2. Add a lightweight smoke-test script — I can create code/test_notebooks.py
+  that asserts the notebooks are valid JSON, the output files exist, and the key
+  data files are present. The hook would then have something concrete to point
+  to.
+  3. Contact whoever manages the harness — if this is a FleetView-level hook and
+  it's blocking your workflow, it needs to be adjusted there (e.g., scoped to
+  only fire when *_test.py or test_*.py files exist in the repo).
+
+  Would you like me to create a smoke-test script (option 2)?
+
+✻ Baked for 11m 2s
+
+※ recap: Updated stopwords in 02_topic_modeling-Copy1.ipynb, re-ran LDA, and saved results to 02_topic_modeling_claude.ipynb. Next: confirm whether to create a smoke-test script to satisfy the stop hook. (disable recaps in /config)
+
+❯  read 02_topic_modeling_claude.ipynb (section 8 and 9) and perform new topic  
+  identification using data from 02_topic_modeling_Copy1.ipynb and              
+  output/lda_vis_chn.html. Save the topic identification titles and summary     
+  table in a new notebook titled 03_topic_summary.ipynb. Then, read             
+  pie_chart.ipynb and add new cells in 03_topic_summary.ipynb to recreate the   
+  chart with corresponding categorical data.                                    
+
+⏺ Let me read all the relevant files at once.
+
+  Searched for 1 pattern, read 1 file, ran 3 shell commands (ctrl+o to expand)
+
+⏺ Now I have everything. Let me analyze the lda_vis_chn.html data carefully
+  against the Copy1 raw output, then build the notebook.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Clear picture. Now I'll write 03_topic_summary.ipynb with the fresh topic
+  identification from the original model data plus the updated pie chart.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Now run the notebook to verify all cells execute cleanly and the chart is
+  correct.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Everything runs and validates. Here's what was done:
+
+  ---
+  03_topic_summary.ipynb — 14 cells
+
+  Topic identification draws exclusively from lda_vis_chn.html (original model)
+  + 02_topic_modeling-Copy1.ipynb. Loglift is used as the primary signal to cut
+  through boilerplate inflation in the frequency-ranked terms.
+
+  Summary Table
+
+  Display T: T1
+  Corpus %: 23.9%
+  Cluster: Commercial/Financial
+  Chinese Title: 商业合同违约与债务追偿
+  Top Terms (loglift): 出借, 补救措施, 公司财务, 专用章, 授权书
+  ────────────────────────────────────────
+  Display T: T2
+  Corpus %: 23.9%
+  Cluster: Sports-Specific
+  Chinese Title: 网络侵权与运动员肖像权纠纷
+  Top Terms (loglift): 侵权行为, 致歉, 肖像权, 推送, 二维码
+  ────────────────────────────────────────
+  Display T: T3
+  Corpus %: 22.8%
+  Cluster: Sports-Specific
+  Chinese Title: 运动队编制人事与薪资待遇
+  Top Terms (loglift): 在编, 违纪, 工资标准, 津贴, 体校
+  ────────────────────────────────────────
+  Display T: T4
+  Corpus %: 19.7%
+  Cluster: Sports-Specific
+  Chinese Title: 运动员退役安置与行政诉讼
+  Top Terms (loglift): 公派, 打球, 发号, 签收, 主体资格
+  ────────────────────────────────────────
+  Display T: T5
+  Corpus %: 9.7%
+  Cluster: Sports-Specific
+  Chinese Title: 运动伤害医疗赔偿
+  Top Terms (loglift): 住宿费, 椎间盘, 护理费, 营养费, 伤残
+
+  Sports-Specific: 76.1% | Commercial/Financial: 23.9%
+
+  The pie chart (saved to output/topic_pie_original.png) is a direct recreation
+  of pie_chart.ipynb's donut+arc style, with updated percentages, topic labels,
+  and cluster arcs reflecting this model's data. Sports topics (T2→T3→T4→T5)
+  group together on the left arc; T1 (commercial) sits alone on the right.
+
+✻ Crunched for 5m 0s
+
+❯ /passes                                                                       
+  ⎿  Referral link copied to clipboard!
+
+※ recap: Built 03_topic_summary.ipynb with topic titles, summary table, and updated pie chart from the original LDA model. Ready for your next task.
+
+❯ Read 03_topic_summary.ipynb and 04_keyword_density.ipynb and use the top 20   
+  keywords to draw a density graph visualization of keyword distribution across 
+  the five different topics.                                                    
+  Save the new script as 04_keyword_density_modified.ipynb.                     
+
+  Searched for 1 pattern, read 2 files (ctrl+o to expand)
+
+⏺ The existing notebook is empty. Let me pull the full term-topic weight matrix
+  from the HTML to design the density visualization properly.
+
+  Ran 5 shell commands (ctrl+o to expand)
+
+⏺ Now I have all the data I need. The matrix shows both exclusive markers and
+  bridge terms that spread across topics — good material for a density
+  visualization. Let me build the notebook.
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+⏺ Both charts rendered. Let me verify the notebook cell structure is clean.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Both output files are good. 04_keyword_density_modified.ipynb is written and
+  valid (13 cells). Here's what was built:
+
+  ---
+  04_keyword_density_modified.ipynb — 13 cells
+
+  Data source: lda_vis_chn.html → token.table, which contains p(topic | term) —
+  the actual probability that a keyword belongs to each topic, normalised to sum
+  ≈ 1 per term.
+
+  Top 20 keywords selected as:
+  - 4 exclusive signature terms per topic (highest loglift, nearly all weight
+  concentrated in one topic):
+    - T1: 出借, 补救措施, 公司财务, 授权书
+    - T2: 侵权行为, 肖像权, 致歉, 二维码
+    - T3: 在编, 工资标准, 体校, 离队
+    - T4: 公派, 发号, 主体资格, 退役费
+    - T5: 护理费, 椎间盘, 营养费, 伤残
+  - 4 bridge terms spread across 2–3 topics (择业, 补偿金, 补发, 行政诉讼法)
+
+  Two visualizations saved:
+
+  1. output/keyword_density_heatmap.png — annotated heatmap where cell colour
+  intensity encodes p(topic | keyword), coloured by each topic's theme colour.
+  The right-side bar shows each term's maximum topic weight. Bridge terms
+  visibly carry colour in multiple columns.
+  2. output/keyword_density_bars.png — stacked horizontal bars where each bar is
+  one keyword and coloured segments show the proportional split across topics.
+  Bridge terms have multi-colour bars; exclusive terms are solid single-colour.
+
+✻ Worked for 6m 28s
+
+※ recap: Built topic modeling notebooks for Chinese athlete court case LDA analysis. Last task created 04_keyword_density_modified.ipynb with a heatmap and stacked bar chart showing keyword distribution across 5 topics. Ready for your next direction.
+
+❯ read 02_dtm.ipynb. Create a new keyword density analysis in the same logic as 
+  04_keyword_density_modified.ipynb except using the top 20 keywords of the     
+  entire court case corpus. Save the new script as                              
+  04_keyword_density_fulltext.ipynb                                             
+
+  Searched for 1 pattern, read 2 files (ctrl+o to expand)
+⏺ Now I have everything. The DTM logic in 02_dtm.ipynb uses CountVectorizer on
+  the string-serialized keyword lists from 02_tokenized.csv. Let me verify the
+  top 20 terms against the token.table before writing the notebook.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ All 20 terms are in the token.table with rich multi-topic distributions — much
+  more interesting than the exclusive terms. T1 is always 0 for these
+  corpus-wide terms (good finding to surface). Now building the notebook.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+⏺ Both charts rendered cleanly. 04_keyword_density_fulltext.ipynb is complete
+  (14 cells). Here's a summary:
+
+  ---
+  What this notebook does differently from _modified
+
+  ┌────────────┬─────────────────────────────┬─────────────────────────────┐
+  │            │ 04_keyword_density_modified │ 04_keyword_density_fulltext │
+  ├────────────┼─────────────────────────────┼─────────────────────────────┤
+  │ Term       │ LDA loglift (most           │ Raw DTM corpus frequency    │
+  │ selection  │ discriminative per topic)   │ (most common overall)       │
+  ├────────────┼─────────────────────────────┼─────────────────────────────┤
+  │ Data       │ lda_vis_chn.html tinfo      │ 02_tokenized.csv →          │
+  │ source     │                             │ CountVectorizer             │
+  ├────────────┼─────────────────────────────┼─────────────────────────────┤
+  │ Row order  │ Grouped by topic block      │ Frequency rank #1–#20       │
+  ├────────────┼─────────────────────────────┼─────────────────────────────┤
+  │ Right-side │ Max topic weight            │ Document count (n out of    │
+  │  bar       │                             │ 79)                         │
+  └────────────┴─────────────────────────────┴─────────────────────────────┘
+
+  Key findings surfaced by the corpus-wide selection
+
+  - T1 (商业合同) is empty across all 20 terms — commercial/debt vocabulary is
+  specialised and doesn't show up in the highest-frequency case language, even
+  though T1 holds 23.9% of corpus share
+  - T3 (运动队人事) dominates 9 of 20 terms — sports personnel and wage disputes
+  produce the broadest shared vocabulary
+  - Boilerplate validated: 民事 (#14), 民事判决 (#3), 民事裁定 (#4) rank high by
+  frequency but their topic weights are diffuse noise — confirming their
+  addition to the modified STOPWORDS was correct
+  - 微信 bridges T1 ↔ T2 — WeChat is used as evidence in both commercial
+  disputes and image-rights cases
+
+  Outputs saved to output/keyword_density_fulltext_heatmap.png (234 KB) and
+  output/keyword_density_fulltext_bars.png (198 KB).
+
+✻ Worked for 4m 22s
+
+※ recap: Built topic modeling analysis notebooks for Chinese athlete court cases. Next: continue adding visualizations or analysis sections as needed.

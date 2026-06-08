@@ -42,8 +42,10 @@ Overview of the two databases’ function, according to the Supreme People’s C
 - 如果是针对体校、劳动（整个体系的），驳回上诉的比例？
 - 网站：finding2改成可以选中文还是英文
 
+
 - filter to all ligitants
-- topic modeling. -> types of complaints? 
+- topic modeling. -> topic summary of types of complaints
+- density of 
 
 
 
@@ -52,7 +54,6 @@ visualizations
 - topics summary (micro)
 - pie chart of categories of the topics (macro)
 - top 10 keywords across all topics - density plot
-
 
 
 
@@ -131,24 +132,60 @@ This project aims to restore importance in the athlete as an individual, and exp
 
 
 ------data-------
-China Judgements Online (CJO, chn name, link) is one of the two officially maintainted databases in China where "legally effective ajudication documents [are made] public according to law" (Donald Clarke. Follow-up on the Fate of China Judgments Online. url: https:// thechinacollection.org/follow-fate-china-judgments-online/.). The Supreme People's Court work report describes the database as an effort to promote judicial through judical openess and transparency. Despite recent taken-down////下架 of ????? cases, CJO still boasts ??? cases and is the largest database for a judicial perspective into Chinese society. The CJO includes cases from all four levels of Chinese court, from the national Supreme People's Court to local High Level People's Courts. All cases studied in this project are pulled from this database, available after a open-to-all user registration using a China mainland phone number .
+China Judgements Online (CJO, chn name, link) is one of the two officially maintainted databases in China where "legally effective ajudication documents [are made] public according to law" (Donald Clarke. Follow-up on the Fate of China Judgments Online. url: https:// thechinacollection.org/follow-fate-china-judgments-online/.). The Supreme People's Court work report describes the database as an effort to promote judicial through judical openess and transparency. Despite recent taken-down////下架 of ????? cases, CJO still boasts ??? cases and is the largest database for a judicial perspective into Chinese society. The CJO includes cases from all four levels of Chinese court, from the national Supreme People's Court to local High Level People's Courts. All cases studied in this project are pulled from this database, available after a open-to-all user registration using a China mainland phone number.
 
 
-methods
-Topic modeling on pre-processed case text was determined to be the overall workflow after manually examining sample court cases from CJO. All CJO cases were in plain text format, contained no graphics, and 
+Methods
+Because court cases can be pulled as pure text, topic modeling was determined to be the best method to categorize main areas of complaint raised by retired Chinese athletes.
 
-Data was first obtained from CJO using the ??? package in Python to perform web scraping for all cases that contained the keyword "退役运动员" using the CJO website's 原生 search function. a 
+1. Pull
+Data was first obtained from CJO using the ??? package in Python to perform web scraping for all cases that matched the keyword "退役运动员" using the CJO website's built-in search function.  
 
 (flow chart? pull - filter - clean - topic modeling & additional analysis.)
 
+2. Filter
+After examming sample cases, it was evident there were coincidental matches that needed to be removed, such as cases between two maketing companies that had retired athletes as a potential customer (?). To filter to cases where retired athletes were the litigant, jieba parts of speech labeling (LINK) was used on case titles (Chinese court case case titles clearly contain the names of the litigant and defendant). Titles containing person's names (NR per jieba's dictionary) where kept except in the case if the person name was directly followed by a orginization indicator, a list of keywords that denote institutioanl entities. This accounted for all cases of NR misidentification in the project dataset. Titles that did not contain NR labels were also kept, although none were found in the dataset.
 
-results writing
+3. Topic Identification
 
 
-results figures/tables 
+Using the filtered cases, original cases texts were cleaned of stopwords and preprocessed into word tokens. 
+
+STOPWORDS
+Stopwords consisted of boiler-plate court jargon and words that did not contain useful infromation (e.g. document formatting languge). The list of stopwords went through many iterations after manually checking top keywords from the Genism visualization for irrelevant words, and with AI sugguestions after having it read the raw CSV of filtered cases. All stopwords were ultimately defined manually. Below is the full table of stopwords used in the analysis
+\\\ insert table of stopwords.
+
+NUMBER OF TOPICS
+The most suitable topic was chosen based on lowest topic overlap according to Jaccard index calculation as well as highest semantic coherence using gensim's \(C_{v}\) coherence model. The best number of topics was determined to be eight.
 
 
-discussion
+
+Topic mdeling was performed using the gensim (insert link) library, an LDA visualziation (///) generated, and fed to Claude Code to analyze topic content. (FOOTNOTE: full transcript of the Claude Code session is available in the Appendix: Agentic Workflow Review.) In addition, top 20??? keywords out of all cases were identified, and their distribution across topics mapped.
+
+![]
+
+4. results figures/tables 
+
+
+
+
+
+5. Supplementary findings
+
+Male judicial visibility is historically high, with more men likely to go to court for the same offenses than women (CITE???). I was curious if this was also true for Chinese retired athletes. Court cases almost always idinfitied the gender of the litigant (???? out of the total 79 cases), and results showed that female judicial visibility was ????% less than men. 
+
+///// insert pie chart
+
+
+6. discussion
+
+T5 identification is highly unreliable. The model 
+
+
+
+Gender discrepnacy.
+
+
 
 
 Note: 
