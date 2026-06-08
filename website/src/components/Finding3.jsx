@@ -102,7 +102,7 @@ export default function Finding3() {
           <SectionHeader
             number="IV"
             finding="Results IV"
-            title="Female Athletes Are Nearly Invisible in Court"
+            title="Females Athletes are Less Visible in Court"
             body="Despite comprising a large share of China's elite sports workforce, female athletes appear in only one-third of retired-athlete court cases. This 35-percentage-point gap is the study's most striking finding."
           />
 
