@@ -1,5 +1,26 @@
 import { useFadeIn } from '../hooks/useFadeIn'
 
+const CONCLUSIONS = [
+  {
+    color: 'var(--jade)',
+    num: '01',
+    heading: 'Retirement is the flashpoint',
+    body: 'The most common disputes — unpaid wages, withheld benefits, denied career-placement subsidies — all center on the moment athletes leave professional sports. The transition out of elite sport is institutionally underprotected.',
+  },
+  {
+    color: 'var(--gold)',
+    num: '02',
+    heading: 'Topic modeling reveals hidden complexity',
+    body: 'Eight distinct dispute clusters emerge: from image-rights exploitation on WeChat to statute-of-limitations procedural traps. Commercial and sports-HR cases each represent ~21% of the corpus, despite appearing superficially different.',
+  },
+  {
+    color: 'var(--plum)',
+    num: '03',
+    heading: 'Female athletes face a double barrier',
+    body: 'Male athletes are twice as likely to appear in court. Structural factors — unequal contract norms, social pressure against litigation, and differential access to legal resources — may compound during the post-career transition.',
+  },
+]
+
 const LINKS = [
   {
     label: 'GitHub Repository',
@@ -41,15 +62,47 @@ export default function Auxiliary() {
   const ref = useFadeIn()
 
   return (
-    <section id="auxiliary" className="section" style={{ background: 'var(--bg)', minHeight: 'auto', padding: '5rem 2.5rem' }}>
+    <section id="takeaway" className="section" style={{ background: 'var(--bg)' }}>
       <div className="section-inner">
         <div ref={ref} className="fade-in">
-          <p className="label-tag">Read More</p>
-          <h2 className="section-title" style={{ marginBottom: '0.75rem' }}>
-            Find the Project
-          </h2>
+          <p className="label-tag">Takeaway</p>
+          <h2 className="section-title">Three Things This Data Tells Us</h2>
           <p className="section-body" style={{ marginBottom: '3rem' }}>
-            Access the full codebase, cleaned datasets, and methodology documentation, or reach out directly.
+            Court records are an underused window into labor conditions in elite sport.
+            Here is what 79 cases reveal.
+          </p>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '4rem' }}>
+            {CONCLUSIONS.map(c => (
+              <div key={c.num} style={{
+                display: 'flex', gap: '1.5rem', alignItems: 'flex-start',
+                background: 'var(--surface)',
+                border: '1px solid var(--border)',
+                borderRadius: 'var(--radius)',
+                padding: '1.5rem',
+                borderLeft: `3px solid ${c.color}`,
+              }}>
+                <div style={{
+                  fontFamily: 'var(--font-serif)', fontSize: '1.8rem', fontWeight: 300,
+                  color: c.color, lineHeight: 1, flexShrink: 0, width: 36,
+                }}>{c.num}</div>
+                <div>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+                    {c.heading}
+                  </h3>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.72 }}>
+                    {c.body}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="accent-line" style={{ marginBottom: '1.5rem' }} />
+
+          <p className="label-tag">Find the Project</p>
+          <p className="section-body" style={{ marginBottom: '2rem' }}>
+            Full codebase, cleaned datasets, and methodology documentation.
           </p>
 
           <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap' }}>
@@ -70,17 +123,13 @@ function LinkCard({ label, sub, href, icon, color }) {
       target="_blank"
       rel="noopener noreferrer"
       style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '1rem',
+        display: 'flex', alignItems: 'center', gap: '1rem',
         padding: '1.25rem 1.5rem',
         background: 'var(--surface)',
         border: '1px solid var(--border)',
         borderRadius: 'var(--radius)',
         transition: 'border-color 0.2s, transform 0.2s, box-shadow 0.2s',
-        flex: '1 1 220px',
-        maxWidth: 320,
-        cursor: 'pointer',
+        flex: '1 1 220px', maxWidth: 320,
       }}
       onMouseEnter={e => {
         e.currentTarget.style.borderColor = color
@@ -95,9 +144,7 @@ function LinkCard({ label, sub, href, icon, color }) {
     >
       <div style={{ color, flexShrink: 0 }}>{icon}</div>
       <div>
-        <div style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.2rem' }}>
-          {label}
-        </div>
+        <div style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.2rem' }}>{label}</div>
         <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{sub}</div>
       </div>
       <svg style={{ marginLeft: 'auto', color: 'var(--text-muted)', flexShrink: 0 }}
