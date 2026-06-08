@@ -1,0 +1,1044 @@
+▗ ▗   ▖ ▖  Claude Code v2.1.168
+           Sonnet 4.6 · Claude Pro
+  ▘▘ ▝▝    ~/…/OneDrive-DartmouthCollege/qss20_athlete_court_complaints/code
+
+ ▎ Opus 4.8 is now available! · /model to switch
+
+❯ read 03_topic_summary.ipynb and perform two separated analysis using          
+  lda_vis_chn_4.html and lda_vis_chn_8.html in the same logic (identify content 
+  of each topic, create summary table, find clusters i.e. possible broader      
+  categories that topics share, create topic distribution pie chart.) Create    
+  multiple layers of outer category arcs to show nested relationship of         
+  different categories if necessary. save the scripts to                        
+  03_topic_summary_n4.ipynb and 03_topic_summary_n8.ipynb                       
+
+⏺ I'll start by reading the existing notebook and examining the HTML files to
+  understand the structure.
+
+  Read 1 file, listed 1 directory (ctrl+o to expand)
+
+⏺ Now let me parse both HTML files to extract topic data.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ Now I have all the data I need. Let me write both notebooks.
+
+⏺ Write(03_topic_summary_n4.ipynb)
+  ⎿  Wrote 415 lines to 03_topic_summary_n4.ipynb
+       1 {
+       2  "cells": [
+       3   {
+       4    "cell_type": "markdown",
+       5    "id": "a1b2c3d4",
+       7    "source": [
+       8     "# 03 — Topic Summary (4-Topic Model)\n",
+       9     "\n",
+      10     "Topic identification from the 4-topic LDA model (`output/ld
+         a_vis_chn_4.html`).\n",
+     … +501 lines (ctrl+o to expand)
+
+⏺ Now the 8-topic notebook with two-layer nested arcs:
+
+⏺ Write(03_topic_summary_n8.ipynb)
+  ⎿  Wrote 558 lines to 03_topic_summary_n8.ipynb
+       1 {
+       2  "cells": [
+       3   {
+       4    "cell_type": "markdown",
+       5    "id": "a1b2c3d4",
+       7    "source": [
+       8     "# 03 — Topic Summary (8-Topic Model)\n",
+       9     "\n",
+      10     "Topic identification from the 8-topic LDA model (`output/ld
+         a_vis_chn_8.html`).\n",
+     … +701 lines (ctrl+o to expand)
+
+⏺ Let me verify both notebooks execute correctly by running them as scripts:
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+⏺ Both notebooks execute cleanly and produce the output PNGs. Here's a summary
+  of what was created:
+
+  03_topic_summary_n4.ipynb — 4-topic model
+
+  ┌───────┬───────┬──────────────────────────────────────────────────────┐
+  │ Topic │   %   │                        Theme                         │
+  ├───────┼───────┼──────────────────────────────────────────────────────┤
+  │ T1    │ 31.9% │ Sports-Team Personnel Status & Wage Benefits         │
+  ├───────┼───────┼──────────────────────────────────────────────────────┤
+  │ T2    │ 28.4% │ Commercial Contract Breach & Debt Recovery           │
+  ├───────┼───────┼──────────────────────────────────────────────────────┤
+  │ T3    │ 27.1% │ Athlete Retirement Benefits & Online Rights Disputes │
+  ├───────┼───────┼──────────────────────────────────────────────────────┤
+  │ T4    │ 12.6% │ Sports Injury & Medical Compensation                 │
+  └───────┴───────┴──────────────────────────────────────────────────────┘
+
+  Clusters: Sports-Specific 71.6% (Personnel 31.9% + Rights/Benefits 27.1% +
+  Medical 12.6%) vs Commercial 28.4%. Pie chart has one outer arc layer.
+
+  ---
+  03_topic_summary_n8.ipynb — 8-topic model
+
+  ┌───────────────────┬────────────┬───────┐
+  │    Sub-cluster    │   Topics   │   %   │
+  ├───────────────────┼────────────┼───────┤
+  │ Personnel & Admin │ T1, T6, T8 │ 34.6% │
+  ├───────────────────┼────────────┼───────┤
+  │ Medical & Injury  │ T3, T4, T7 │ 34.2% │
+  ├───────────────────┼────────────┼───────┤
+  │ Rights & Digital  │ T5         │ 9.5%  │
+  ├───────────────────┼────────────┼───────┤
+  │ Commercial        │ T2         │ 21.7% │
+  └───────────────────┴────────────┴───────┘
+
+  Pie chart uses two nested outer arc layers: inner arc shows the 4
+  sub-clusters, outer arc shows Sports-Specific (78.3%) vs Commercial (21.7%).
+  Outputs saved to output/topic_pie_n4.png and output/topic_pie_n8.png.
+
+✻ Sautéed for 8m 34s
+
+※ recap: Created two analysis notebooks (03_topic_summary_n4.ipynb and 03_topic_summary_n8.ipynb) following the original topic summary logic for 4- and 8-topic LDA models. Both run cleanly and saved pie charts. No immediate next action needed. (disable recaps in /config)
+
+❯ in 03_topic_summary_n8.ipynb: T5 Online Infringement & Athlete Image-Rights   
+  should be under the Commercial / Financial catwgory                           
+
+  Read 1 file (ctrl+o to expand)
+
+⏺ Four edits needed: T5's cluster/sub_cluster, the breakdown cell, the pie chart
+  grouping and arc logic, and the legend. I'll do them all now.
+
+⏺ Update(03_topic_summary_n8.ipynb)
+  ⎿  Error editing file
+
+⏺ Now I'll edit the four cells that need changing: TOPIC_META, cluster
+  breakdown, pie chart code, and the description markdown.
+  ⎿  Updated cell a7b8c9d0:
+         1 ## 3. Topic Identification
+         2 
+         3 The 8-topic model (`lda_vis_chn_8.html`) splits the five origi
+           nal topics into finer sub-themes.
+         4 Identification uses **loglift** (exclusivity) over frequency t
+           o avoid boilerplate inflation.
+         5 
+         6 The 8 topics fall into three sports sub-clusters and one comme
+           rcial cluster. T5 (Online Infringement
+         7 & Image-Rights) is grouped under **Commercial / Financial** be
+           cause these cases centre on the
+         8 unauthorised commercial exploitation of athlete likeness for p
+           rofit.
+         9 
+        10 | Display T | Corpus % | Gensim idx | Top loglift terms | Sub-
+           cluster |
+        11 |---|---|---|---|---|
+        12 | T1 | 21.9% | 5 | 在编, 欠款, 违纪, 体委, 离队 | Personnel & 
+           Admin |
+        13 | T2 | 21.7% | 4 | 公司财务, 补救措施, 兽药, 经手人 | Commerci
+           al |
+        14 | T3 | 16.3% | 8 | 住宿费, 椎间盘, 工作队, 食宿费 | Medical & 
+           Injury |
+        15 | T4 | 13.6% | 3 | 工伤保险, 书面通知, 赔偿金, 伤病 | Medical 
+           & Injury |
+        16 | T5 | 9.5%  | 1 | 财产损失, 肖像权, 百科, 致歉, 二维码 | Comm
+           ercial (image-rights exploitation) |
+        17 | T6 | 9.3%  | 6 | 行政诉讼法, 体工, 起诉状, 函号 | Personnel 
+           & Admin |
+        18 | T7 | 4.3%  | 2 | 体育运动, 木樨园, 工龄, 社会保险, 半月板 | 
+           Medical & Injury |
+        19 | T8 | 3.4%  | 7 | 时效, 垒球, 全运会, 扣发, 主体资格 | Person
+           nel & Admin |
+        20 
+        21 T1's high-loglift debt terms (年利率, 欠款, 清偿) reflect back
+           -pay settlement language embedded
+        22 in formal HR decisions — the frequency terms (择业, 工资待遇, 
+           体委) confirm a sports-HR topic.
+  ⎿  Updated cell b8c9d0e1:
+          1 # topic.order: [5, 4, 8, 3, 1, 6, 2, 7]
+          2 # Display T1 = Gensim 5  (Python idx 4)
+          3 # Display T2 = Gensim 4  (Python idx 3)
+          4 # Display T3 = Gensim 8  (Python idx 7)
+          5 # Display T4 = Gensim 3  (Python idx 2)
+          6 # Display T5 = Gensim 1  (Python idx 0)
+          7 # Display T6 = Gensim 6  (Python idx 5)
+          8 # Display T7 = Gensim 2  (Python idx 1)
+          9 # Display T8 = Gensim 7  (Python idx 6)
+         10 
+         11 TOPIC_META = {
+         12     1: {
+         13         "zh": "运动队编制管理与工资薪酬",
+         14         "en": "Sports-Team Roster Management & Wage Disputes"
+            ,
+         15         "pct": 21.94,
+         16         "gensim_idx": 4,
+         17         "cluster": "sports",
+         18         "sub_cluster": "personnel",
+         19         "top_terms_ll": ["在编","年利率","欠款","借款人","清
+            偿","违纪","处理意见","体委","离队","佐证","服从组织"],
+         20         "top_terms_fr": ["体育局","民事判决","择业","人事处",
+            "人事厅","运动队","体委","工资待遇","离队","退役费"],
+         21         "description": (
+         22             "Core sports HR disputes (21.9%). Roster status (
+            在编), disciplinary proceedings "
+         23             "(违纪), departure from team (离队), and wage rec
+            overy — primarily against sports "
+         24             "bureaus (体育局, 体委) and personnel departments
+             (人事处/人事厅). High-loglift "
+         25             "debt terms (年利率, 欠款, 清偿) reflect back-pay
+             settlement language embedded "
+         26             "in formal HR decisions."
+         27         ),
+         28     },
+         29     2: {
+         30         "zh": "商业合同违约与债务追偿",
+         31         "en": "Commercial Contract Breach & Debt Recovery",
+         32         "pct": 21.67,
+         33         "gensim_idx": 3,
+         34         "cluster": "commercial",
+         35         "sub_cluster": "commercial",
+         36         "top_terms_ll": ["公司财务","补救措施","经手人","强强
+            ","补充协议","兽药","观光旅游","公德","出库","蔬菜水果"],
+         37         "top_terms_fr": ["履行合同","公司财务","补救措施","借
+            条","出借","下属单位","转款","授权书","欠付","公章"],
+         38         "description": (
+         39             "Commercial and financial disputes (21.7%). Sport
+            s organizations as parties to "
+         40             "supply, service, or loan contracts. Highly disti
+            nctive vocabulary: supplementary "
+         41             "agreements (补充协议), contract handlers (经手人
+            ), and industry-specific goods "
+         42             "(兽药 veterinary drugs, 蔬菜水果 produce) confir
+            m sports-club commercial "
+         43             "operations. Consistent across all model sizes."
+         44         ),
+         45     },
+         46     3: {
+         47         "zh": "一般运动员赔偿与医疗费用",
+         48         "en": "General Athlete Compensation & Medical Costs",
+         49         "pct": 16.27,
+         50         "gensim_idx": 7,
+         51         "cluster": "sports",
+         52         "sub_cluster": "medical",
+         53         "top_terms_ll": ["住宿费","椎间盘","工作队","食宿费",
+            "法律效力","小学文化","外事学院","碑林区"],
+         54         "top_terms_fr": ["民事裁定","民事","退役","运动员","
+            体育局","补偿金","体工队","民事判决","补发","住宿费"],
+         55         "description": (
+         56             "Catch-all compensation topic (16.3%). Combines m
+            edical/injury line items "
+         57             "(住宿费, 椎间盘, 食宿费) with general retirement
+            -and-compensation boilerplate "
+         58             "(民事裁定, 退役, 补偿金, 体工队). Distinctive lo
+            glift terms include specific "
+         59             "locality names (碑林区) and contextual markers (
+            小学文化, 外事学院) that anchor "
+         60             "individual case narratives."
+         61         ),
+         62     },
+         63     4: {
+         64         "zh": "工伤保险与劳动合同解除纠纷",
+         65         "en": "Work Injury Insurance & Employment Termination
+            ",
+         66         "pct": 13.63,
+         67         "gensim_idx": 2,
+         68         "cluster": "sports",
+         69         "sub_cluster": "medical",
+         70         "top_terms_ll": ["工伤保险","书面通知","共融","存档",
+            "月入","赔偿金","工作大队","停缴","合同法","补助金","伤病"],
+         71         "top_terms_fr": ["补偿费","聘用","择业","体育局","停
+            发","赔偿金","工伤保险","国家体育总局","伤病","辞退"],
+         72         "description": (
+         73             "Insurance and dismissal cases (13.6%). Distinct 
+            from purely medical topics by "
+         74             "emphasis on work injury insurance (工伤保险), em
+            ployment contracts (合同法), "
+         75             "and formal termination procedures (辞退, 停发, 
+            书面通知). Athletes claim "
+         76             "compensation for sports-related illness/injury (
+            伤病) combined with wrongful "
+         77             "or uncompensated dismissal from sports units."
+         78         ),
+         79     },
+         80     5: {
+         81         "zh": "网络侵权与运动员肖像权",
+         82         "en": "Online Infringement & Athlete Image-Rights",
+         83         "pct": 9.53,
+         84         "gensim_idx": 0,
+         85         "cluster": "commercial",
+         86         "sub_cluster": "commercial",
+         87         "top_terms_ll": ["财产损失","肖像权","百科","致歉","
+            文末","二维码","版面","侵权行为","截图","责任法","微信"],
+         88         "top_terms_fr": ["微信","截图","抚慰金","财产损失","
+            赔偿损失","肖像权","百科","致歉","文末","二维码"],
+         89         "description": (
+         90             "Digital image-rights exploitation (9.5%). Unauth
+            orized commercial use of "
+         91             "athlete likeness via WeChat (微信), QR codes (二
+            维码), screenshots (截图), and "
+         92             "online encyclopedia edits (百科). Plaintiffs see
+            k apologies (致歉) and "
+         93             "compensation for property and dignity losses (财
+            产损失, 抚慰金). Grouped under "
+         94             "Commercial / Financial because the core dispute 
+            is monetisation of athlete "
+         95             "identity without consent, legally grounded in 责
+            任法 (Tort Liability Law)."
+         96         ),
+         97     },
+         98     6: {
+         99         "zh": "行政诉讼程序与形式要件",
+        100         "en": "Administrative Litigation Procedure & Formal R
+            equirements",
+        101         "pct": 9.32,
+        102         "gensim_idx": 5,
+        103         "cluster": "sports",
+        104         "sub_cluster": "personnel",
+        105         "top_terms_ll": ["行政诉讼法","体工","起诉状","签收",
+            "三性","加盖","刑诉","函号","写明","意见书","发号"],
+        106         "top_terms_fr": ["行政诉讼法","体育局","补发","体工",
+            "起诉状","签收","原系","三性","刑诉","函号"],
+        107         "description": (
+        108             "Administrative litigation formalities (9.3%). Ca
+            ses focusing on procedural "
+        109             "requirements under administrative litigation law
+             (行政诉讼法): proper service "
+        110             "(签收), official letter numbers (函号/发号), sta
+            mping requirements (加盖), "
+        111             "written complaints (起诉状/意见书), and the thre
+            e-pronged admissibility test "
+        112             "(三性). Sports-unit standing (体工, 主体资格) is
+             a central contested issue."
+        113         ),
+        114     },
+        115     7: {
+        116         "zh": "体育训练伤害与社会保险",
+        117         "en": "Sports Training Injuries & Social Insurance",
+        118         "pct": 4.29,
+        119         "gensim_idx": 1,
+        120         "cluster": "sports",
+        121         "sub_cluster": "medical",
+        122         "top_terms_ll": ["体育运动","木樨园","受理","工龄","
+            纠纷案件","代表人","体育训练","社会保险","半月板","适用"],
+        123         "top_terms_fr": ["体育运动","木樨园","受理","工龄","
+            体育训练","运动员","民事","退役","纠纷案件","社会保险"],
+        124         "description": (
+        125             "Sports training injury and pension cases (4.3%).
+             Injuries arising during "
+        126             "organised training (体育训练) or competition, in
+            tersecting with social insurance "
+        127             "and seniority (工龄) entitlements. Injury marker
+            : 半月板 (meniscus tear). "
+        128             "Location marker 木樨园 (Beijing's Muxiyuan Sport
+            s Complex) anchors a cluster "
+        129             "of specific cases."
+        130         ),
+        131     },
+        132     8: {
+        133         "zh": "诉讼时效与退役安置争议",
+        134         "en": "Statute of Limitations & Retirement Placement 
+            Disputes",
+        135         "pct": 3.35,
+        136         "gensim_idx": 6,
+        137         "cluster": "sports",
+        138         "sub_cluster": "personnel",
+        139         "top_terms_ll": ["经省","时效","垒球","打球","全运会"
+            ,"扣发","当庭","因私","另案"],
+        140         "top_terms_fr": ["体工队","经省","时效","停发","书面
+            形式","体育局","择业","人事局","报请","主体资格"],
+        141         "description": (
+        142             "Procedural time-bar and retirement disputes (3.4
+            %). Smallest topic; "
+        143             "centres on statute-of-limitations (时效) challen
+            ges raised by defendants "
+        144             "in retirement-placement cases. Sport markers (垒
+            球 softball, 打球 ball play, "
+        145             "全运会 National Games) confirm athlete context. 
+            Procedural overlap with T6 "
+        146             "on standing (主体资格)."
+        147         ),
+        148     },
+        149 }
+        150 
+        151 for tn, m in TOPIC_META.items():
+        152     print(f"Display T{tn} ({m['pct']}%)  [cluster={m['cluster
+            ']}, sub={m['sub_cluster']}]")
+        153     print(f"  ZH: {m['zh']}")
+        154     print(f"  EN: {m['en']}")
+        155     print(f"  Key (loglift): {', '.join(m['top_terms_ll'][:5]
+            )}")
+        156     print()
+  ⎿  Updated cell f2a3b4c5:
+         1 sports_pct = sum(m["pct"] for m in TOPIC_META.values() if m["c
+           luster"] == "sports")
+         2 comm_pct   = sum(m["pct"] for m in TOPIC_META.values() if m["c
+           luster"] == "commercial")
+         3 
+         4 sub_sums = {}
+         5 for m in TOPIC_META.values():
+         6     sub_sums[m["sub_cluster"]] = sub_sums.get(m["sub_cluster"]
+           , 0) + m["pct"]
+         7 
+         8 personnel_topics = [f"T{t}" for t, m in TOPIC_META.items() if 
+           m["sub_cluster"]=="personnel"]
+         9 medical_topics   = [f"T{t}" for t, m in TOPIC_META.items() if 
+           m["sub_cluster"]=="medical"]
+        10 comm_topics      = [f"T{t}" for t, m in TOPIC_META.items() if 
+           m["cluster"]=="commercial"]
+        11 
+        12 print("Nested cluster shares (8-topic model):")
+        13 print(f"  Sports-Specific Disputes  : {sports_pct:.1f}%")
+        14 print(f"    ↳ Personnel & Admin     : {sub_sums['personnel']:.
+           1f}%  ({', '.join(personnel_topics)})")
+        15 print(f"    ↳ Medical & Injury      : {sub_sums['medical']:.1f
+           }%  ({', '.join(medical_topics)})")
+        16 print(f"  Commercial / Financial    : {comm_pct:.1f}%  ({', '.
+           join(comm_topics)})")
+        17 print(f"    ↳ Contract & Debt       : {TOPIC_META[2]['pct']:.1
+           f}%  (T2)")
+        18 print(f"    ↳ Image-Rights Exploit. : {TOPIC_META[5]['pct']:.1
+           f}%  (T5)")
+        19 print(f"  Total                     : {sports_pct+comm_pct:.1f
+           }%")
+
+⏺ Now update the pie chart — new topic order [1,6,8,3,4,7,2,5], 2 sub-groups
+  (personnel, medical), commercial arc covers both T2 and T5, sports arc covers
+  wedges 0–5:
+  ⎿  Updated cell a3b4c5d6:
+        1 ## 6. Topic Distribution Pie Chart with Nested Arcs
+        2 
+        3 Topics are grouped and ordered by cluster: Personnel & Admin (T
+          1, T6, T8) → Medical & Injury
+        4 (T3, T4, T7) → Commercial (T2, T5). Two outer arc layers show t
+          he nested category structure:
+        5 - **Inner arc** (Layer 1): three sub-clusters within sports + c
+          ommercial (which contains T2 and T5)
+        6 - **Outer arc** (Layer 2): two main clusters (Sports vs Commerc
+          ial)  ⎿  Updated cell b4c5d6e7:
+          1 # ── Colors ─────────────────────────────────────────────────
+            ─────────────────
+          2 # Personnel group: greens; Medical group: blues; Commercial g
+            roup: purples/red
+          3 COLORS = {
+          4     1: "#1E8449",   # dark green    — roster/wages
+          5     2: "#7D3C98",   # purple        — commercial contract
+          6     3: "#1A5276",   # dark blue     — general compensation
+          7     4: "#2980B9",   # medium blue   — work injury insurance
+          8     5: "#C0392B",   # red           — image rights
+          9     6: "#52BE80",   # medium green  — admin litigation
+         10     7: "#85C1E9",   # light blue    — training injury
+         11     8: "#A9DFBF",   # pale green    — statute of limitations
+         12 }
+         13 
+         14 # Sub-cluster arc colors (Layer 1)
+         15 SUBCL_COLORS = {
+         16     "personnel": "#1D6A39",   # deep green
+         17     "medical":   "#154360",   # deep blue
+         18     "commercial": "#6C3483",  # deep purple
+         19 }
+         20 
+         21 # Main cluster arc colors (Layer 2)
+         22 SPORTS_COLOR = "#1A6A9E"
+         23 COMM_COLOR   = "#6C3483"
+         24 
+         25 # ── Pie ordering: Personnel group, Medical group, Commercial
+             group ────────────
+         26 # topic_order: [1,6,8] personnel | [3,4,7] medical | [2,5] co
+            mmercial
+         27 # wedge indices:  0,1,2           |  3,4,5          |  6,7
+         28 topic_order  = [1, 6, 8, 3, 4, 7, 2, 5]
+         29 pcts         = [TOPIC_META[t]["pct"] for t in topic_order]
+         30 wedge_labels = [f"T{t}\n{TOPIC_META[t]['pct']:.1f}%" for t in
+             topic_order]
+         31 
+         32 fig, ax = plt.subplots(figsize=(12, 11))
+         33 ax.set_aspect("equal")
+         34 ax.set_facecolor("#f8f9fa")
+         35 fig.patch.set_facecolor("#f8f9fa")
+         36 
+         37 wedges, texts = ax.pie(
+         38     pcts,
+         39     labels=wedge_labels,
+         40     colors=[COLORS[t] for t in topic_order],
+         41     startangle=90,
+         42     labeldistance=1.10,
+         43     wedgeprops=dict(edgecolor="white", linewidth=2.0, width=0
+            .50),
+         44     textprops=dict(fontsize=8.0, fontweight="bold"),
+         45 )
+         46 for text, tn in zip(texts, topic_order):
+         47     text.set_color(COLORS[tn])
+         48 
+         49 ax.text(0, 0, "Athlete\nCourt Cases\n(n = 79)",
+         50         ha="center", va="center", fontsize=10,
+         51         fontweight="bold", color="#2C3E50")
+         52 
+         53 # ── Layer 1: sub-cluster arcs (inner) ──────────────────────
+            ─────────────────
+         54 ARC1_INNER, ARC1_OUTER, GAP1 = 1.38, 1.49, 2.5
+         55 
+         56 sub_groups = [
+         57     ("personnel", 0, 2),   # T1, T6, T8 → wedges 0–2
+         58     ("medical",   3, 5),   # T3, T4, T7 → wedges 3–5
+         59     ("commercial",6, 7),   # T2, T5     → wedges 6–7
+         60 ]
+         61 
+         62 for sub, start_idx, end_idx in sub_groups:
+         63     t1 = wedges[start_idx].theta1
+         64     t2 = wedges[end_idx].theta2
+         65     ax.add_patch(mpatches.Wedge(
+         66         (0, 0), ARC1_OUTER, t1 + GAP1, t2 - GAP1,
+         67         width=ARC1_OUTER - ARC1_INNER,
+         68         color=SUBCL_COLORS[sub], alpha=0.90, edgecolor="none"
+            ,
+         69     ))
+         70 
+         71 # ── Layer 2: main cluster arcs (outer) ─────────────────────
+            ─────────────────
+         72 # Sports = wedges 0–5 (T1,T6,T8,T3,T4,T7); Commercial = wedge
+            s 6–7 (T2,T5)
+         73 ARC2_INNER, ARC2_OUTER, GAP2 = 1.53, 1.64, 2.0
+         74 
+         75 sports_t1 = wedges[0].theta1
+         76 sports_t2 = wedges[5].theta2
+         77 comm_t1   = wedges[6].theta1
+         78 comm_t2   = wedges[7].theta2
+         79 
+         80 ax.add_patch(mpatches.Wedge(
+         81     (0, 0), ARC2_OUTER, sports_t1 + GAP2, sports_t2 - GAP2,
+         82     width=ARC2_OUTER - ARC2_INNER, color=SPORTS_COLOR, alpha=
+            0.90, edgecolor="none",
+         83 ))
+         84 ax.add_patch(mpatches.Wedge(
+         85     (0, 0), ARC2_OUTER, comm_t1 + GAP2, comm_t2 - GAP2,
+         86     width=ARC2_OUTER - ARC2_INNER, color=COMM_COLOR, alpha=0.
+            90, edgecolor="none",
+         87 ))
+         88 
+         89 # ── Arc labels ─────────────────────────────────────────────
+            ───────────────────
+         90 L1_LABEL_R = 1.74
+         91 SUB_LABELS = {
+         92     "personnel": "Personnel\n& Admin",
+         93     "medical":   "Medical\n& Injury",
+         94     "commercial": "Commercial\n& Image Rights",
+         95 }
+         96 for sub, start_idx, end_idx in sub_groups:
+         97     t1 = wedges[start_idx].theta1
+         98     t2 = wedges[end_idx].theta2
+         99     mid = np.radians((t1 + t2) / 2)
+        100     ax.text(L1_LABEL_R * np.cos(mid), L1_LABEL_R * np.sin(mid
+            ),
+        101             SUB_LABELS[sub],
+        102             ha="center", va="center", fontsize=7.5,
+        103             fontweight="bold", color=SUBCL_COLORS[sub])
+        104 
+        105 L2_LABEL_R = 1.92
+        106 sports_mid = np.radians((sports_t1 + sports_t2) / 2)
+        107 comm_mid   = np.radians((comm_t1   + comm_t2)   / 2)
+        108 
+        109 ax.text(L2_LABEL_R * np.cos(sports_mid), L2_LABEL_R * np.sin(
+            sports_mid),
+        110         "Sports-Specific\nDisputes",
+        111         ha="center", va="center", fontsize=9, fontweight="bol
+            d", color=SPORTS_COLOR)
+        112 ax.text(L2_LABEL_R * np.cos(comm_mid), L2_LABEL_R * np.sin(co
+            mm_mid),
+        113         "Commercial /\nFinancial",
+        114         ha="center", va="center", fontsize=9, fontweight="bol
+            d", color=COMM_COLOR)
+        115 
+        116 ax.set_xlim(-2.4, 2.4)
+        117 ax.set_ylim(-2.5, 2.4)
+        118 ax.axis("off")
+        119 
+        120 # ── Legend ─────────────────────────────────────────────────
+            ───────────────────
+        121 legend_handles = [
+        122     mpatches.Patch(color=COLORS[1], label="T1 – Sports-Team R
+            oster Management & Wage Disputes  (21.9%)"),
+        123     mpatches.Patch(color=COLORS[6], label="T6 – Administrativ
+            e Litigation Procedure & Formal Requirements  (9.3%)"),
+        124     mpatches.Patch(color=COLORS[8], label="T8 – Statute of Li
+            mitations & Retirement Placement Disputes  (3.4%)"),
+        125     mpatches.Patch(color=COLORS[3], label="T3 – General Athle
+            te Compensation & Medical Costs  (16.3%)"),
+        126     mpatches.Patch(color=COLORS[4], label="T4 – Work Injury I
+            nsurance & Employment Termination  (13.6%)"),
+        127     mpatches.Patch(color=COLORS[7], label="T7 – Sports Traini
+            ng Injuries & Social Insurance  (4.3%)"),
+        128     mpatches.Patch(color=COLORS[2], label="T2 – Commercial Co
+            ntract Breach & Debt Recovery  (21.7%)"),
+        129     mpatches.Patch(color=COLORS[5], label="T5 – Online Infrin
+            gement & Athlete Image-Rights  (9.5%)"),
+        130 ]
+        131 ax.legend(handles=legend_handles, loc="lower center", ncol=1,
+        132           fontsize=7.5, framealpha=0.85, edgecolor="#ccc",
+        133           bbox_to_anchor=(0.5, -0.01))
+        134 
+        135 ax.set_title(
+        136     "LDA Topic Distribution — Athlete Court Cases (8-Topic Mo
+            del)\n"
+        137     "(inner arc = sub-cluster; outer arc = main cluster; slic
+            e area ∝ corpus share)",
+        138     fontsize=11, fontweight="bold", pad=14,
+        139 )
+        140 
+        141 plt.tight_layout()
+        142 plt.savefig("../output/topic_pie_n8.png", dpi=150, bbox_inche
+            s="tight")
+        143 plt.show()
+        144 print("Saved -> ../output/topic_pie_n8.png")
+
+⏺ Now verify it all runs cleanly:
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ All correct. T5 now shows cluster=commercial throughout — in the metadata
+  printout, summary table (labelled "Commercial / Financial"), cluster breakdown
+  (31.2% commercial = T2 21.7% + T5 9.5%), and the pie chart where T2 and T5
+  sit together under the shared Commercial arc.
+
+✻ Churned for 2m 48s
+
+※ recap: Created two new topic summary notebooks for the 4-topic and 8-topic LDA models, then recategorized T5 (image rights) under Commercial in the 8-topic notebook. Ready for any further adjustments. (disable recaps in /config)
+
+❯ Revert the first layer cluster of T5 to original (online rights infrigement). 
+  only the outer layer changes to commercial/financial                          
+
+⏺ The inner arc should restore T5's own "Rights & Digital" segment; only the
+  outer arc groups it into Commercial. Changes needed: T5's sub_cluster back to
+  "rights", add "rights" back to the sub-group loop and its colors/labels, and
+  fix the summary table mapping.
+  ⎿  Updated cell b8c9d0e1:
+          1 # topic.order: [5, 4, 8, 3, 1, 6, 2, 7]
+          2 # Display T1 = Gensim 5  (Python idx 4)
+          3 # Display T2 = Gensim 4  (Python idx 3)
+          4 # Display T3 = Gensim 8  (Python idx 7)
+          5 # Display T4 = Gensim 3  (Python idx 2)
+          6 # Display T5 = Gensim 1  (Python idx 0)
+          7 # Display T6 = Gensim 6  (Python idx 5)
+          8 # Display T7 = Gensim 2  (Python idx 1)
+          9 # Display T8 = Gensim 7  (Python idx 6)
+         10 
+         11 TOPIC_META = {
+         12     1: {
+         13         "zh": "运动队编制管理与工资薪酬",
+         14         "en": "Sports-Team Roster Management & Wage Disputes"
+            ,
+         15         "pct": 21.94,
+         16         "gensim_idx": 4,
+         17         "cluster": "sports",
+         18         "sub_cluster": "personnel",
+         19         "top_terms_ll": ["在编","年利率","欠款","借款人","清
+            偿","违纪","处理意见","体委","离队","佐证","服从组织"],
+         20         "top_terms_fr": ["体育局","民事判决","择业","人事处",
+            "人事厅","运动队","体委","工资待遇","离队","退役费"],
+         21         "description": (
+         22             "Core sports HR disputes (21.9%). Roster status (
+            在编), disciplinary proceedings "
+         23             "(违纪), departure from team (离队), and wage rec
+            overy — primarily against sports "
+         24             "bureaus (体育局, 体委) and personnel departments
+             (人事处/人事厅). High-loglift "
+         25             "debt terms (年利率, 欠款, 清偿) reflect back-pay
+             settlement language embedded "
+         26             "in formal HR decisions."
+         27         ),
+         28     },
+         29     2: {
+         30         "zh": "商业合同违约与债务追偿",
+         31         "en": "Commercial Contract Breach & Debt Recovery",
+         32         "pct": 21.67,
+         33         "gensim_idx": 3,
+         34         "cluster": "commercial",
+         35         "sub_cluster": "commercial",
+         36         "top_terms_ll": ["公司财务","补救措施","经手人","强强
+            ","补充协议","兽药","观光旅游","公德","出库","蔬菜水果"],
+         37         "top_terms_fr": ["履行合同","公司财务","补救措施","借
+            条","出借","下属单位","转款","授权书","欠付","公章"],
+         38         "description": (
+         39             "Commercial and financial disputes (21.7%). Sport
+            s organizations as parties to "
+         40             "supply, service, or loan contracts. Highly disti
+            nctive vocabulary: supplementary "
+         41             "agreements (补充协议), contract handlers (经手人
+            ), and industry-specific goods "
+         42             "(兽药 veterinary drugs, 蔬菜水果 produce) confir
+            m sports-club commercial "
+         43             "operations. Consistent across all model sizes."
+         44         ),
+         45     },
+         46     3: {
+         47         "zh": "一般运动员赔偿与医疗费用",
+         48         "en": "General Athlete Compensation & Medical Costs",
+         49         "pct": 16.27,
+         50         "gensim_idx": 7,
+         51         "cluster": "sports",
+         52         "sub_cluster": "medical",
+         53         "top_terms_ll": ["住宿费","椎间盘","工作队","食宿费",
+            "法律效力","小学文化","外事学院","碑林区"],
+         54         "top_terms_fr": ["民事裁定","民事","退役","运动员","
+            体育局","补偿金","体工队","民事判决","补发","住宿费"],
+         55         "description": (
+         56             "Catch-all compensation topic (16.3%). Combines m
+            edical/injury line items "
+         57             "(住宿费, 椎间盘, 食宿费) with general retirement
+            -and-compensation boilerplate "
+         58             "(民事裁定, 退役, 补偿金, 体工队). Distinctive lo
+            glift terms include specific "
+         59             "locality names (碑林区) and contextual markers (
+            小学文化, 外事学院) that anchor "
+         60             "individual case narratives."
+         61         ),
+         62     },
+         63     4: {
+         64         "zh": "工伤保险与劳动合同解除纠纷",
+         65         "en": "Work Injury Insurance & Employment Termination
+            ",
+         66         "pct": 13.63,
+         67         "gensim_idx": 2,
+         68         "cluster": "sports",
+         69         "sub_cluster": "medical",
+         70         "top_terms_ll": ["工伤保险","书面通知","共融","存档",
+            "月入","赔偿金","工作大队","停缴","合同法","补助金","伤病"],
+         71         "top_terms_fr": ["补偿费","聘用","择业","体育局","停
+            发","赔偿金","工伤保险","国家体育总局","伤病","辞退"],
+         72         "description": (
+         73             "Insurance and dismissal cases (13.6%). Distinct 
+            from purely medical topics by "
+         74             "emphasis on work injury insurance (工伤保险), em
+            ployment contracts (合同法), "
+         75             "and formal termination procedures (辞退, 停发, 
+            书面通知). Athletes claim "
+         76             "compensation for sports-related illness/injury (
+            伤病) combined with wrongful "
+         77             "or uncompensated dismissal from sports units."
+         78         ),
+         79     },
+         80     5: {
+         81         "zh": "网络侵权与运动员肖像权",
+         82         "en": "Online Infringement & Athlete Image-Rights",
+         83         "pct": 9.53,
+         84         "gensim_idx": 0,
+         85         "cluster": "commercial",
+         86         "sub_cluster": "rights",
+         87         "top_terms_ll": ["财产损失","肖像权","百科","致歉","
+            文末","二维码","版面","侵权行为","截图","责任法","微信"],
+         88         "top_terms_fr": ["微信","截图","抚慰金","财产损失","
+            赔偿损失","肖像权","百科","致歉","文末","二维码"],
+         89         "description": (
+         90             "Digital image-rights exploitation (9.5%). Unauth
+            orized commercial use of "
+         91             "athlete likeness via WeChat (微信), QR codes (二
+            维码), screenshots (截图), and "
+         92             "online encyclopedia edits (百科). Plaintiffs see
+            k apologies (致歉) and "
+         93             "compensation for property and dignity losses (财
+            产损失, 抚慰金). Grouped under "
+         94             "Commercial / Financial at the top level because 
+            the core dispute is monetisation "
+         95             "of athlete identity without consent; legally gro
+            unded in 责任法 (Tort Liability Law)."
+         96         ),
+         97     },
+         98     6: {
+         99         "zh": "行政诉讼程序与形式要件",
+        100         "en": "Administrative Litigation Procedure & Formal R
+            equirements",
+        101         "pct": 9.32,
+        102         "gensim_idx": 5,
+        103         "cluster": "sports",
+        104         "sub_cluster": "personnel",
+        105         "top_terms_ll": ["行政诉讼法","体工","起诉状","签收",
+            "三性","加盖","刑诉","函号","写明","意见书","发号"],
+        106         "top_terms_fr": ["行政诉讼法","体育局","补发","体工",
+            "起诉状","签收","原系","三性","刑诉","函号"],
+        107         "description": (
+        108             "Administrative litigation formalities (9.3%). Ca
+            ses focusing on procedural "
+        109             "requirements under administrative litigation law
+             (行政诉讼法): proper service "
+        110             "(签收), official letter numbers (函号/发号), sta
+            mping requirements (加盖), "
+        111             "written complaints (起诉状/意见书), and the thre
+            e-pronged admissibility test "
+        112             "(三性). Sports-unit standing (体工, 主体资格) is
+             a central contested issue."
+        113         ),
+        114     },
+        115     7: {
+        116         "zh": "体育训练伤害与社会保险",
+        117         "en": "Sports Training Injuries & Social Insurance",
+        118         "pct": 4.29,
+        119         "gensim_idx": 1,
+        120         "cluster": "sports",
+        121         "sub_cluster": "medical",
+        122         "top_terms_ll": ["体育运动","木樨园","受理","工龄","
+            纠纷案件","代表人","体育训练","社会保险","半月板","适用"],
+        123         "top_terms_fr": ["体育运动","木樨园","受理","工龄","
+            体育训练","运动员","民事","退役","纠纷案件","社会保险"],
+        124         "description": (
+        125             "Sports training injury and pension cases (4.3%).
+             Injuries arising during "
+        126             "organised training (体育训练) or competition, in
+            tersecting with social insurance "
+        127             "and seniority (工龄) entitlements. Injury marker
+            : 半月板 (meniscus tear). "
+        128             "Location marker 木樨园 (Beijing's Muxiyuan Sport
+            s Complex) anchors a cluster "
+        129             "of specific cases."
+        130         ),
+        131     },
+        132     8: {
+        133         "zh": "诉讼时效与退役安置争议",
+        134         "en": "Statute of Limitations & Retirement Placement 
+            Disputes",
+        135         "pct": 3.35,
+        136         "gensim_idx": 6,
+        137         "cluster": "sports",
+        138         "sub_cluster": "personnel",
+        139         "top_terms_ll": ["经省","时效","垒球","打球","全运会"
+            ,"扣发","当庭","因私","另案"],
+        140         "top_terms_fr": ["体工队","经省","时效","停发","书面
+            形式","体育局","择业","人事局","报请","主体资格"],
+        141         "description": (
+        142             "Procedural time-bar and retirement disputes (3.4
+            %). Smallest topic; "
+        143             "centres on statute-of-limitations (时效) challen
+            ges raised by defendants "
+        144             "in retirement-placement cases. Sport markers (垒
+            球 softball, 打球 ball play, "
+        145             "全运会 National Games) confirm athlete context. 
+            Procedural overlap with T6 "
+        146             "on standing (主体资格)."
+        147         ),
+        148     },
+        149 }
+        150 
+        151 for tn, m in TOPIC_META.items():
+        152     print(f"Display T{tn} ({m['pct']}%)  [cluster={m['cluster
+            ']}, sub={m['sub_cluster']}]")
+        153     print(f"  ZH: {m['zh']}")
+        154     print(f"  EN: {m['en']}")
+        155     print(f"  Key (loglift): {', '.join(m['top_terms_ll'][:5]
+            )}")
+        156     print()
+
+⏺ Now fix the summary table to label T5's sub_cluster="rights" under Commercial:
+  ⎿  Updated cell d0e1f2a3:
+         1 SUB_LABEL = {
+         2     "personnel": "Sports — Personnel & Admin",
+         3     "medical":   "Sports — Medical & Injury",
+         4     "rights":    "Commercial — Image Rights",
+         5     "commercial": "Commercial / Financial",
+         6 }
+         7 
+         8 rows = []
+         9 for tn, m in TOPIC_META.items():
+        10     rows.append({
+        11         "Display T": f"T{tn}",
+        12         "Corpus %": f"{m['pct']:.1f}%",
+        13         "Sub-cluster": SUB_LABEL[m["sub_cluster"]],
+        14         "Chinese Title": m["zh"],
+        15         "Top Terms (loglift)": ", ".join(m["top_terms_ll"][:5]
+           ),
+        16         "English Theme": m["en"],
+        17     })
+        18 
+        19 summary = pd.DataFrame(rows).set_index("Display T")
+        20 pd.set_option("display.max_colwidth", 55)
+        21 print(summary.to_string())
+        22 summary
+
+⏺ Now restore 4 sub-groups in the pie chart's Layer 1, with T5 getting its own
+  "Rights & Digital" arc:
+  ⎿  Updated cell b4c5d6e7:
+          1 # ── Colors ─────────────────────────────────────────────────
+            ─────────────────
+          2 # Personnel group: greens; Medical group: blues; Rights: red;
+             Commercial: purple
+          3 COLORS = {
+          4     1: "#1E8449",   # dark green    — roster/wages
+          5     2: "#7D3C98",   # purple        — commercial contract
+          6     3: "#1A5276",   # dark blue     — general compensation
+          7     4: "#2980B9",   # medium blue   — work injury insurance
+          8     5: "#C0392B",   # red           — image rights
+          9     6: "#52BE80",   # medium green  — admin litigation
+         10     7: "#85C1E9",   # light blue    — training injury
+         11     8: "#A9DFBF",   # pale green    — statute of limitations
+         12 }
+         13 
+         14 # Sub-cluster arc colors (Layer 1)
+         15 SUBCL_COLORS = {
+         16     "personnel": "#1D6A39",   # deep green
+         17     "medical":   "#154360",   # deep blue
+         18     "rights":    "#922B21",   # deep red
+         19     "commercial": "#6C3483",  # deep purple
+         20 }
+         21 
+         22 # Main cluster arc colors (Layer 2)
+         23 SPORTS_COLOR = "#1A6A9E"
+         24 COMM_COLOR   = "#6C3483"
+         25 
+         26 # ── Pie ordering: Personnel (T1,T6,T8) | Medical (T3,T4,T7) 
+            | Commercial (T2,T5) ──
+         27 # wedge indices:     0, 1, 2            |  3, 4, 5           
+            |  6, 7
+         28 topic_order  = [1, 6, 8, 3, 4, 7, 2, 5]
+         29 pcts         = [TOPIC_META[t]["pct"] for t in topic_order]
+         30 wedge_labels = [f"T{t}\n{TOPIC_META[t]['pct']:.1f}%" for t in
+             topic_order]
+         31 
+         32 fig, ax = plt.subplots(figsize=(12, 11))
+         33 ax.set_aspect("equal")
+         34 ax.set_facecolor("#f8f9fa")
+         35 fig.patch.set_facecolor("#f8f9fa")
+         36 
+         37 wedges, texts = ax.pie(
+         38     pcts,
+         39     labels=wedge_labels,
+         40     colors=[COLORS[t] for t in topic_order],
+         41     startangle=90,
+         42     labeldistance=1.10,
+         43     wedgeprops=dict(edgecolor="white", linewidth=2.0, width=0
+            .50),
+         44     textprops=dict(fontsize=8.0, fontweight="bold"),
+         45 )
+         46 for text, tn in zip(texts, topic_order):
+         47     text.set_color(COLORS[tn])
+         48 
+         49 ax.text(0, 0, "Athlete\nCourt Cases\n(n = 79)",
+         50         ha="center", va="center", fontsize=10,
+         51         fontweight="bold", color="#2C3E50")
+         52 
+         53 # ── Layer 1: sub-cluster arcs (inner) ──────────────────────
+            ─────────────────
+         54 # T5 keeps its own "rights" arc; T2 keeps its own "commercial
+            " arc
+         55 ARC1_INNER, ARC1_OUTER, GAP1 = 1.38, 1.49, 2.5
+         56 
+         57 sub_groups = [
+         58     ("personnel", 0, 2),   # T1, T6, T8 → wedges 0–2
+         59     ("medical",   3, 5),   # T3, T4, T7 → wedges 3–5
+         60     ("commercial",6, 6),   # T2         → wedge  6
+         61     ("rights",    7, 7),   # T5         → wedge  7
+         62 ]
+         63 
+         64 for sub, start_idx, end_idx in sub_groups:
+         65     t1 = wedges[start_idx].theta1
+         66     t2 = wedges[end_idx].theta2
+         67     ax.add_patch(mpatches.Wedge(
+         68         (0, 0), ARC1_OUTER, t1 + GAP1, t2 - GAP1,
+         69         width=ARC1_OUTER - ARC1_INNER,
+         70         color=SUBCL_COLORS[sub], alpha=0.90, edgecolor="none"
+            ,
+         71     ))
+         72 
+         73 # ── Layer 2: main cluster arcs (outer) ─────────────────────
+            ─────────────────
+         74 # Sports = wedges 0–5 (T1,T6,T8,T3,T4,T7); Commercial = wedge
+            s 6–7 (T2,T5)
+         75 ARC2_INNER, ARC2_OUTER, GAP2 = 1.53, 1.64, 2.0
+         76 
+         77 sports_t1 = wedges[0].theta1
+         78 sports_t2 = wedges[5].theta2
+         79 comm_t1   = wedges[6].theta1
+         80 comm_t2   = wedges[7].theta2
+         81 
+         82 ax.add_patch(mpatches.Wedge(
+         83     (0, 0), ARC2_OUTER, sports_t1 + GAP2, sports_t2 - GAP2,
+         84     width=ARC2_OUTER - ARC2_INNER, color=SPORTS_COLOR, alpha=
+            0.90, edgecolor="none",
+         85 ))
+         86 ax.add_patch(mpatches.Wedge(
+         87     (0, 0), ARC2_OUTER, comm_t1 + GAP2, comm_t2 - GAP2,
+         88     width=ARC2_OUTER - ARC2_INNER, color=COMM_COLOR, alpha=0.
+            90, edgecolor="none",
+         89 ))
+         90 
+         91 # ── Arc labels ─────────────────────────────────────────────
+            ───────────────────
+         92 L1_LABEL_R = 1.74
+         93 SUB_LABELS = {
+         94     "personnel": "Personnel\n& Admin",
+         95     "medical":   "Medical\n& Injury",
+         96     "commercial": "Commercial\n& Financial",
+         97     "rights":    "Online\nInfringement",
+         98 }
+         99 for sub, start_idx, end_idx in sub_groups:
+        100     t1 = wedges[start_idx].theta1
+        101     t2 = wedges[end_idx].theta2
+        102     mid = np.radians((t1 + t2) / 2)
+        103     ax.text(L1_LABEL_R * np.cos(mid), L1_LABEL_R * np.sin(mid
+            ),
+        104             SUB_LABELS[sub],
+        105             ha="center", va="center", fontsize=7.5,
+        106             fontweight="bold", color=SUBCL_COLORS[sub])
+        107 
+        108 L2_LABEL_R = 1.92
+        109 sports_mid = np.radians((sports_t1 + sports_t2) / 2)
+        110 comm_mid   = np.radians((comm_t1   + comm_t2)   / 2)
+        111 
+        112 ax.text(L2_LABEL_R * np.cos(sports_mid), L2_LABEL_R * np.sin(
+            sports_mid),
+        113         "Sports-Specific\nDisputes",
+        114         ha="center", va="center", fontsize=9, fontweight="bol
+            d", color=SPORTS_COLOR)
+        115 ax.text(L2_LABEL_R * np.cos(comm_mid), L2_LABEL_R * np.sin(co
+            mm_mid),
+        116         "Commercial /\nFinancial",
+        117         ha="center", va="center", fontsize=9, fontweight="bol
+            d", color=COMM_COLOR)
+        118 
+        119 ax.set_xlim(-2.4, 2.4)
+        120 ax.set_ylim(-2.5, 2.4)
+        121 ax.axis("off")
+        122 
+        123 # ── Legend ─────────────────────────────────────────────────
+            ───────────────────
+        124 legend_handles = [
+        125     mpatches.Patch(color=COLORS[1], label="T1 – Sports-Team R
+            oster Management & Wage Disputes  (21.9%)"),
+        126     mpatches.Patch(color=COLORS[6], label="T6 – Administrativ
+            e Litigation Procedure & Formal Requirements  (9.3%)"),
+        127     mpatches.Patch(color=COLORS[8], label="T8 – Statute of Li
+            mitations & Retirement Placement Disputes  (3.4%)"),
+        128     mpatches.Patch(color=COLORS[3], label="T3 – General Athle
+            te Compensation & Medical Costs  (16.3%)"),
+        129     mpatches.Patch(color=COLORS[4], label="T4 – Work Injury I
+            nsurance & Employment Termination  (13.6%)"),
+        130     mpatches.Patch(color=COLORS[7], label="T7 – Sports Traini
+            ng Injuries & Social Insurance  (4.3%)"),
+        131     mpatches.Patch(color=COLORS[2], label="T2 – Commercial Co
+            ntract Breach & Debt Recovery  (21.7%)"),
+        132     mpatches.Patch(color=COLORS[5], label="T5 – Online Infrin
+            gement & Athlete Image-Rights  (9.5%)"),
+        133 ]
+        134 ax.legend(handles=legend_handles, loc="lower center", ncol=1,
+        135           fontsize=7.5, framealpha=0.85, edgecolor="#ccc",
+        136           bbox_to_anchor=(0.5, -0.01))
+        137 
+        138 ax.set_title(
+        139     "LDA Topic Distribution — Athlete Court Cases (8-Topic Mo
+            del)\n"
+        140     "(inner arc = sub-cluster; outer arc = main cluster; slic
+            e area ∝ corpus share)",
+        141     fontsize=11, fontweight="bold", pad=14,
+        142 )
+        143 
+        144 plt.tight_layout()
+        145 plt.savefig("../output/topic_pie_n8.png", dpi=150, bbox_inche
+            s="tight")
+        146 plt.show()
+        147 print("Saved -> ../output/topic_pie_n8.png")
+
+  Ran 1 shell command (ctrl+o to expand)
+
+⏺ T5 is now cluster=commercial, sub=rights — so in the pie chart:
+  - Inner arc (Layer 1): T5 gets its own red "Online Infringement" arc, separate
+  from T2's purple "Commercial & Financial" arc
+  - Outer arc (Layer 2): T2 and T5 are both spanned by the single "Commercial /
+  Financial" arc
+
+✻ Cooked for 2m 22s
+
+※ recap: Two topic-summary notebooks were created and refined for 4-topic and 8-topic LDA models, including pie charts with nested cluster arcs. T5 in the 8-topic model was just recategorized: inner arc shows Online Infringement, outer arc groups it under Commercial/Financial. (disable recaps in /config)

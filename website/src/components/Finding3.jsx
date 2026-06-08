@@ -96,14 +96,14 @@ export default function Finding3() {
   }, [])
 
   return (
-    <section id="finding3" className="section" style={{ background: 'var(--bg2)' }}>
+    <section id="gender" className="section" style={{ background: 'var(--bg2)' }}>
       <div className="section-inner">
         <div ref={ref} className="fade-in">
           <SectionHeader
-            number="03"
-            finding="Finding III"
-            title="Disparity of Gender Visibility"
-            body="Female athletes are significantly underrepresented in judicial records. Despite comprising a substantial share of China's competitive sports workforce, they appear in only one-third of court cases involving retired athletes."
+            number="IV"
+            finding="Results IV"
+            title="Female Athletes Are Nearly Invisible in Court"
+            body="Despite comprising a large share of China's elite sports workforce, female athletes appear in only one-third of retired-athlete court cases. This 35-percentage-point gap is the study's most striking finding."
           />
 
           <div style={{ display: 'flex', gap: '4rem', alignItems: 'center', flexWrap: 'wrap' }}>

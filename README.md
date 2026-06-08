@@ -43,7 +43,7 @@ Overview of the two databases’ function, according to the Supreme People’s C
 - 网站：finding2改成可以选中文还是英文
 
 
-- filter to all ligitants
+
 - topic modeling. -> topic summary of types of complaints
 - density of 
 
@@ -61,7 +61,6 @@ visualizations
 - translate LDA graph
 - summary table: CHN and EN.
 - CUSTOMIZE pie chart (colors, label, add %)
-'
 
 
 
@@ -121,76 +120,4 @@ Suggested stack: React + Vercel — a tutorial walking through this setup will b
 
 ----
 
------intro/related work-----
-
-Looking at the sport world, China is no doubt a formidable force on the world stage: in the most recent 2024 Paris Olympics, China ??? medals, and have dominated sports like diving and weightlifting, sports that require years of training and expertise. The secret behind this success is China's "Whole-Nation" athlete development system, where athletes are identified as young as five years old, and grow up in specialized sports schools with less academic requirements than normal 义务教育, and train full-time, fully sponsored by the State. This full financial subsidy is a defining characteristic for China's system among the world's. Looking at the other nations ranking Top3 in the Olympics, the US relies on highly commercialized sports leagues such as the NCAA to produce athletes with no governental spending (CITE), and ???? (the other country). For many athletes and their families, having their education and lodging payed for is also one of the largest motivating factors when deciding to trains as an athlete. 
-
-The other side of this coin is that sponsorship ends at the athlete's retirement, and that retirement subsidy is completely dependent on the athlete's performance during their career (CITE LAW). As a result, the majority of ahtletes withouth international-level performance end up in low paying jobs as a result of their lack of education, if not in desolate poverty (CITE MEDIA ). This is an understudied phenonemon, as athletes are often viewed as symbols and tools of achieving national pride, then forgotten without their functionality (Source: Xu, Guoqi. Olympic Dreams: China and Sports, 1895–2008. Harvard University Press, 2008.).  
-
-This project aims to restore importance in the athlete as an individual, and explore the struggles they face post-retirement under the JuGuotixi system. Using China Judgements Online, the largest publicly available databease published by the Supreme People's Court of China,  I explore the main areas of complaint raised by retired athletes. The fingdings provide important data groundwork to analysize the current landscape of athlete welfare in China, and possible causes for its insufficiency.
-
-
-
-------data-------
-China Judgements Online (CJO, chn name, link) is one of the two officially maintainted databases in China where "legally effective ajudication documents [are made] public according to law" (Donald Clarke. Follow-up on the Fate of China Judgments Online. url: https:// thechinacollection.org/follow-fate-china-judgments-online/.). The Supreme People's Court work report describes the database as an effort to promote judicial through judical openess and transparency. Despite recent taken-down////下架 of ????? cases, CJO still boasts ??? cases and is the largest database for a judicial perspective into Chinese society. The CJO includes cases from all four levels of Chinese court, from the national Supreme People's Court to local High Level People's Courts. All cases studied in this project are pulled from this database, available after a open-to-all user registration using a China mainland phone number.
-
-
-Methods
-Because court cases can be pulled as pure text, topic modeling was determined to be the best method to categorize main areas of complaint raised by retired Chinese athletes.
-
-1. Pull
-Data was first obtained from CJO using the ??? package in Python to perform web scraping for all cases that matched the keyword "退役运动员" using the CJO website's built-in search function.  
-
-(flow chart? pull - filter - clean - topic modeling & additional analysis.)
-
-2. Filter
-After examming sample cases, it was evident there were coincidental matches that needed to be removed, such as cases between two maketing companies that had retired athletes as a potential customer (?). To filter to cases where retired athletes were the litigant, jieba parts of speech labeling (LINK) was used on case titles (Chinese court case case titles clearly contain the names of the litigant and defendant). Titles containing person's names (NR per jieba's dictionary) where kept except in the case if the person name was directly followed by a orginization indicator, a list of keywords that denote institutioanl entities. This accounted for all cases of NR misidentification in the project dataset. Titles that did not contain NR labels were also kept, although none were found in the dataset.
-
-3. Topic Identification
-
-
-Using the filtered cases, original cases texts were cleaned of stopwords and preprocessed into word tokens. 
-
-STOPWORDS
-Stopwords consisted of boiler-plate court jargon and words that did not contain useful infromation (e.g. document formatting languge). The list of stopwords went through many iterations after manually checking top keywords from the Genism visualization for irrelevant words, and with AI sugguestions after having it read the raw CSV of filtered cases. All stopwords were ultimately defined manually. Below is the full table of stopwords used in the analysis
-\\\ insert table of stopwords.
-
-NUMBER OF TOPICS
-The most suitable topic was chosen based on lowest topic overlap according to Jaccard index calculation as well as highest semantic coherence using gensim's \(C_{v}\) coherence model. The best number of topics was determined to be eight.
-
-
-
-Topic mdeling was performed using the gensim (insert link) library, an LDA visualziation (///) generated, and fed to Claude Code to analyze topic content. (FOOTNOTE: full transcript of the Claude Code session is available in the Appendix: Agentic Workflow Review.) In addition, top 20??? keywords out of all cases were identified, and their distribution across topics mapped.
-
-![]
-
-4. results figures/tables 
-
-
-
-
-
-5. Supplementary findings
-
-Male judicial visibility is historically high, with more men likely to go to court for the same offenses than women (CITE???). I was curious if this was also true for Chinese retired athletes. Court cases almost always idinfitied the gender of the litigant (???? out of the total 79 cases), and results showed that female judicial visibility was ????% less than men. 
-
-///// insert pie chart
-
-
-6. discussion
-
-T5 identification is highly unreliable. The model 
-
-
-
-Gender discrepnacy.
-
-
-
-
-Note: 
-The full code and data of this project can be found at the following GitHub repository: link. Addtionally, a general-audience demo website is available here(link). 
-
-
-Appendix: agentic review
 

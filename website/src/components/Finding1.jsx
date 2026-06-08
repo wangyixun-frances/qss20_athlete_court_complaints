@@ -94,14 +94,14 @@ export default function Finding1() {
   }, [])
 
   return (
-    <section id="finding1" className="section" style={{ background: 'var(--bg2)' }}>
+    <section id="results" className="section" style={{ background: 'var(--bg2)' }}>
       <div className="section-inner">
         <div ref={ref} className="fade-in">
           <SectionHeader
-            number="01"
-            finding="Finding I"
-            title="Complaints by Judicial Category"
-            body="The vast majority of cases brought by retired athletes are civil suits — disputes over contracts, unpaid wages, and personal injury — rather than criminal or administrative proceedings."
+            number="I"
+            finding="Results I"
+            title="Most Cases Are Civil Disputes"
+            body="The vast majority of cases brought by retired athletes are civil suits — labor contracts, unpaid wages, and personal injury claims — rather than criminal or administrative proceedings."
           />
 
           <div style={{ display: 'flex', gap: '4rem', alignItems: 'center', flexWrap: 'wrap' }}>
