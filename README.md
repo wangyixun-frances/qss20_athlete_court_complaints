@@ -24,100 +24,70 @@ Overview of the two databases’ function, according to the Supreme People’s C
 
 -   The People’s Court Case Database（人民法院案例库）collects all the Guiding Cases issued by the Supreme People’s Court; judges in handling cases must refer (canzhao 参照) to them according to law. At the same time, it collects authoritative cases with referential (cankao 参考) and model value on the recommendation of courts at every level and relevant units upon review and approval by the Supreme People’s Court, for the purpose of supplying references for judges in handling cases. When judges adjudicate cases, they must first check the case database, and make their judgments with reference to (cankao) or applying by reference (canzhao) cases of the same type that are in the database or else explain why they are not doing so. If the reason \[for not doing so\] is valid, then the case can become a new case for collection in the database or replace an existing case, and thus establish a new judgment for reference (cankao). The case database is open to the public for use by parties in litigation, lawyers handling cases, scholars doing research, and the public studying law. Through looking up cases in the database, parties and lawyers can clarify their expectations in litigation and reduce pointless lawsuit filings, appeals, shensu appeals, petitions, etc.
 
-# Methodology
+# Repo Guide
 
-- filter raw_cases.csv to complaints RAISED by athletes AGAINST entity
+## code
 
--  download full text of complaints
+`00_pull.ipynb`
+- Pulls all court cases containing keyword 退役运动员 ("retired athletes") from China Judgements Online https://wenshu.court.gov.cn to a DataFrame. Then exports DataFrame as CSV file "00_raw_cases.csv" to user's working directory (file already available under the "date" directory in repo).
+- INPUT: None.
+- OUTPUT: `data/00_raw_cases.csv`
 
-- filter to keep cases where athletes are litigants
+`01_filter_litigants.ipynb`
+- Filter to cases where retired athletes are the litigant, i.e., at least one litigant is an individual person (not an organization) using parts of speech tagging from the `jieba` library on case names.
+- INPUT: `data/00_raw_cases.csv`
+- OUTPUT: `data/01_filtered_cases.csv`
+- SUPPL: `01_additional_cases.txt` expands the `jieba` person name dictionary to improve tagging accuracy
 
-- clean full case text and tokenize
-
--  topic analysis using tokens.
-
-------------------------------------------------------------------------
-
-
-- 如果是针对体校、劳动（整个体系的），驳回上诉的比例？
-- 网站：finding2改成可以选中文还是英文
-
-
-
-- topic modeling. -> topic summary of types of complaints
-- density of 
+`02_topic_modeling.ipynb`
+- Cleans and tokenizes full text from filtered ligitant cases. Determines the optimal topic number (n = 8) for topic modeling using $C_v$ cohenrence and Jaccard similarity metrics before using the `gensim` library to employ Latent Dirichlet Allocation (LDA) visualization using pyLDAvis display ordering with loglift-ranked terms.
+- INPUT: `data/01_filtered_cases.csv`
+- OUTPUT: `data/02_tokenized.csv`, `output/n_topic_comparison.jpeg`, `output/lda_vis_chn_8.html`
+- SUPPL: `02_topic_modeling_claude.ipynb` preserves Claude Code's analysis script which served as reference
 
 
+`03_topic_summary.ipynb`
+- Records main topics and categories Claude Code identified in the LDA topic modeling result. Creates intiutive pie chart of topics and their (sub)categories.
+- INPUT: `output/lda_vis_chn_8.html`
+- OUTPUT: `output/topic_pie_n8.png`
 
-update stopwords
-visualizations
-- topics summary (micro)
-- pie chart of categories of the topics (macro)
-- top 10 keywords across all topics - density plot
+`04_keyword_distrib.ipynb`
+- Builds a document-text-matrix (DTM) to find the top 15 high-frequency keywords across all cases, then creates a stacked bar plot showing their distrubution across topics.
+- INPUT: `data/02_tokenized.csv`
+- OUTPUT: `output/keyword_distrib.png`
 
+`05_gender_dif.ipynb`
+- Records gender of retired athlete litigants. Creates pie chart of male/female litigant porportions.
+- INPUT: `data/01_filtered_cases.csv`
+- OUTPUT: `output/gender_dif.jpeg`
 
+`05_lawsuit_categ.ipynb`
+- Summaries judicial category of cases raised by retired athletes and creates a pie chart to show distribution.
+- INPUT: `data/01_filtered_cases.csv`
+- OUTPUT: `output/lawsuit_types.jpeg`
 
-最后再干：
-- translate LDA graph
-- summary table: CHN and EN.
-- CUSTOMIZE pie chart (colors, label, add %)
+## data 
 
+`00_raw_cases.csv`
+- All matches of the 退役运动员 keywords from https://wenshu.court.gov.cn.
 
+`01_filtered_cases.csv`
+- Filtered to cases where only retired athletes are the ligitant(s).
 
+`02_tokenized.csv`
+- Added new columns of cleaned and tokenized keywords using the full text of court cases.
 
-WORKFLOW
-- ai analysis (see transcript)
-- updated stopwords using selected modifications, updated analysis
-    - 民事判决, 民事裁定, 民事, 出生, 汉族, 送达, 公告送达, 案件, 申请, 规定, 京民
-    - added 出生, 送达, 公告送达, 案件, 申请, 规定, 京民
-    - 民事判决, 民事裁定, 民事 -> important legal category
-    - 汉族 -> shows demographic information
-- 
+## output
 
+Files explained in code section above.
 
+### `testing` folders
 
-todo:
-Paper + repo + website due: Sunday 06-07, 11:59 PM EST.
+miscellaneous documents produced during the research process. Unrelated to final project files.
 
-Final deliverables are worth 45% of your grade and consist of four pieces:
+## website
 
-1. Paper (6 pages)
+React + Vercel stack. Vibe coded by Claude Code.
 
-Graded with the project rubric — same elements as before (intro/related work, data, methods, results writing, results figures/tables, discussion, code/repo), plus a new element:
-
-Agentic Analysis — A short section (or appendix) that includes your AI transcripts and a critical reflection on your coding session: what you asked the assistant, what you accepted, what you rejected, and where the assistant went wrong.
-
-KEY: USAGE FOR  analysis and for website generation
-
-Format. Write the paper in LaTeX using a PNAS-style single-column template:
-For reference, see the PNAS author guidelines.
-
-The page limit is 6 pages (excluding references and the Agentic Analysis section).
-
-2. GitHub repo (public)
-Numbered notebooks that run in order (00_pull.ipynb, 01_merge.ipynb, 02_analyze.ipynb, …).
-
-README links each notebook with its inputs, what it does, and its outputs.
-
-Directories: code/, data/ (or a cloud-storage link), output/.
-
-No spaces in filenames; no hardcoded paths.
-
-Define functions at the top of each notebook.
-
-Print diagnostics before/after merges.
-
-3. Website (public demo)
-A public-facing site that demos the entire project. It should tell the story end-to-end: question → data → method → result → takeaway. Embed your key figures so a visitor can grasp the project in 2–3 minutes.
-
-Must be live and linkable by the Sunday 06-07 deadline.
-
-Pushes after the deadline receive a 0 for the website component.
-
-Suggested stack: React + Vercel — a tutorial walking through this setup will be released; you are free to use a different stack if you prefer (e.g., GitHub Pages with Jupyter Book or Quarto, Streamlit, static HTML).
-
-
-
-----
-
+Visit the site here: https://qss20-athlete-court-compl-git-457cd4-wangyixun-frances-projects.vercel.app/
 
